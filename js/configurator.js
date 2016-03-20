@@ -103,22 +103,42 @@ APP.Class = function (debug) {
 
 	this.displayLayers();
 
-	// drop down layout select
-	var $layoutList = $('#layout-list');
-	$layoutList.on('click', function (e) {
-		e.stopPropagation();
+	// Load the layers from the server.
+	var params = this.getUrlParameters();
+	var queryString = '';
 
-		var $el = $(this);
-		$el.toggleClass('show');
+	if (params.hasOwnProperty('layout')) {
+		queryString = '?layout=' + params['layout'][0];
+	}
 
-		if ( $el.hasClass('show') ) {
-			that.$document.one('click', function () {
-				$el.removeClass('show');
+	$.ajax({
+		type: 'get',
+		url: 'renderedlayouts.php' + queryString, //TODO: send query params
+		success: function (response) {
+			$(response).fadeIn('slow')
+				.appendTo('#layout-list');
+
+			// drop down layout select
+			var $layoutList = $('#layout-list');
+			$layoutList.on('click', function (e) {
+				e.stopPropagation();
+
+				var $el = $(this);
+				$el.toggleClass('show');
+
+				if ( $el.hasClass('show') ) {
+					that.$document.one('click', function () {
+						$el.removeClass('show');
+					});
+				}
 			});
+
+			that.loadLayout( $layoutList.find('.selected').data('layout') );
+		},
+		error: function (response) {
+			alert('Connection error!');
 		}
 	});
-
-	this.loadLayout( $layoutList.find('.selected').data('layout') );
 };
 
 APP.Class.prototype = {
@@ -304,6 +324,20 @@ APP.Class.prototype = {
 				alert('Connection error!');
 			}
 		});
+	},
+
+	getUrlParameters: function () {
+		var qd = {};
+		var params = window.location.search.substr(1).split("&");
+
+		for (var i = 0, len = params.length; i < len; i++) {
+			var s = params[i].split("=");
+			var k = s[0];
+			var v = s[1] && decodeURIComponent(s[1]);
+			(k in qd) ? qd[k].push(v) : qd[k] = [v]
+		}
+
+		return qd;
 	}
 };
 

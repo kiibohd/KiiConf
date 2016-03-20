@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>KII Keyboard Configurator</title>
 
-	<link rel="stylesheet" type="text/css" href="css/style.css?v=<?php echo filemtime('css/style.css') ?>">
+	<link rel="stylesheet" type="text/css" href="css/style.css?v=monkey">
 	<script src="lib/jquery-2.2.1.min.js"></script>
 	<script src="js/configurator.js"></script>
 	<script src="js/key.js"></script>
@@ -15,7 +15,7 @@
 
 <div id="wrapper" class="wrapper">
 	<nav class="cf">
-		<div id="layout-list" class="pseudo-select"><?php layoutList() ?></div>
+		<div id="layout-list" class="pseudo-select"></div>
 		<button type="button" id="import-map" class="button-read">import map</button>
 		<input type="button" onclick="window.top.location.href='https://github.com/kiibohd/KiiConf';" value="Wiki" />
 		<input type="button" onclick="location.href='stats.json';" value="Version" />
@@ -46,38 +46,4 @@
 </div>
 
 </body>
-</html><?php
-
-function layoutList () {
-	$directory = './layouts/*.json';
-
-	$specified_layout = !empty($_GET['layout']) ? $_GET['layout'] : 'KType-Blank'; // default to KType-Blank
-
-	$files = glob($directory);
-	$old_keyboard = '';
-	$out = '<span id="active-layout-title">' . str_replace('-', ' ', $specified_layout) . '</span><ul>' . "\n";
-
-	foreach ($files as $layout) {
-		$layout = basename($layout, '.json');
-
-		list($keyboard, $variant) = explode('-', $layout, 2);
-
-		if ( $keyboard !== $old_keyboard ) {
-			if ( $old_keyboard !== '' ) {
-				$out .= '</ul></li>' . "\n";
-			}
-
-			$out .= '<li>' . "\n";
-			$out .= '<a href="#" onclick="return false">' . htmlspecialchars($keyboard) . '</a>' . "\n";
-			$out .= '<ul>' . "\n";
-
-			$old_keyboard = $keyboard;
-		}
-
-		$selected = strcasecmp( $specified_layout, $layout ) == 0 ? ' class="selected" ' : '';
-		$out .= '<li' . $selected . ' data-layout="' . htmlspecialchars($layout) . '"><a href="?layout=' . urlencode($layout) . '">' . htmlspecialchars($variant) . '</a></li>' . "\n";
-	}
-
-	$out .= '</ul></li></ul>';
-	echo $out;
-}
+</html>
