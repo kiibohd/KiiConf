@@ -1,7 +1,12 @@
 #!/bin/bash
 # Jacob Alexander 2015
 
-cd $(dirname $(readlink -f $0))/..
+# OS X's version of readline does not support -f, but the coreutil package has
+# the gnu version greadlink which does support it.
+readlink_() {
+	if [ "$(uname)" == "Darwin" ]; then greadlink "$@"; else readlink "$@"; fi
+}
+cd $(dirname $(readlink_ -f $0))/..
 
 CODE_PATH="controller"
 KLL_PATH="kll"
