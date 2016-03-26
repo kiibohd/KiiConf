@@ -45,6 +45,7 @@ The configurator loads the layout and lets the user configure the keyboard layer
 cd KiiConf
 ./update_controller.bash
 ```
+* Update npm packages with `npm install`
 * Finally build the project with gulp (if globally installed) `gulp dev`
 
 The dev build will create a `dist` directory and symlink to the `controller` and `tmp` directories to allow ensure you do not have to re-build or download them.
