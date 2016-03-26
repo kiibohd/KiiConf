@@ -24,6 +24,7 @@ The configurator loads the layout and lets the user configure the keyboard layer
 * arm-none-eabi-gcc (binutils as well)
 * python3
 * git
+* node.js
 
 #### Recommended
 
@@ -34,17 +35,16 @@ The configurator loads the layout and lets the user configure the keyboard layer
 * ctags
 
 
-### Intial Setup
-
-* Enable web server and point it to the KiiConf directory
+### Intial Dev Setup
+* Enable web server and point it to the KiiConf/dist directory (this directory will get removed and added during build so you may want to make a symbolic link to this directory)
 * Make sure that the following directories have permissions for the web-server to write
   * KiiConf/tmp
   * KiiConf/layouts
-
-Then setup the firmware sources. This script can be run anytime you want to update the firmware source version.
-
+* Then setup the firmware sources. This script can be run anytime you want to update the firmware source version.
 ```bash
 cd KiiConf
 ./update_controller.bash
 ```
+* Finally build the project with gulp (if globally installed) `gulp dev`
 
+The dev build will create a `dist` directory and symlink to the `controller` and `tmp` directories to allow ensure you do not have to re-build or download them.
