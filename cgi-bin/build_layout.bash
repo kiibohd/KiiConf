@@ -27,7 +27,7 @@ layer() {
 	if [ "${output}" == "" ]; then
 		echo ""
 	else
-		echo "${output::-1}"
+		echo "${output::${#output}-1}"
 	fi
 }
 
