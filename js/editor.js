@@ -30,16 +30,17 @@ function APP (debug) {
 	return _instance;
 }
 
-APP.VERSION = '0.2';
-APP.GENERATOR = 'KIICONF';
-
-APP.GRID_SIZE = 10;
-APP.KEY_SIZE = APP.GRID_SIZE * 4;
-APP.STAGE_WIDTH = 0;	// they will be populated later
-APP.STAGE_HEIGHT = 0;
-
 APP.Class = function (debug) {
 	var that = this;
+
+	// First assign through settings. This is a hack until this can be converted
+	// to a full module format.
+	var s = window.APPSETTINGS;
+	for (var p in s) {
+		if (s.hasOwnProperty(p)) {
+			APP[p] = s[p];
+		}
+	}
 
 	this.header = {};
 	this.matrix = [];
@@ -138,7 +139,7 @@ APP.Class.prototype = {
 
 		$.ajax({
 			type: 'post',
-			url: 'save.php',
+			url: APP.URI + 'save.php',
 			data: {
 				'map': JSON.stringify({ header: this.header, matrix: matrix }),
 			},
