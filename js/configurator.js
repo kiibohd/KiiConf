@@ -151,7 +151,7 @@ APP.Class.prototype = {
 			return;
 		}
 
-		$.getJSON('layouts/' + file + '.json', $.proxy(this.buildLayout, this) );
+		$.getJSON(APP.URI + 'layouts/' + file + '.json', $.proxy(this.buildLayout, this) );
 	},
 
 	buildLayout: function (layout) {
