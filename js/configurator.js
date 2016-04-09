@@ -319,7 +319,7 @@ APP.Class.prototype = {
 					return;
 				}
 
-				window.location.href = response.filename;
+				window.location.href = APP.URI + response.filename;
 			},
 			error: function (response) {
 				alert('Connection error!');
