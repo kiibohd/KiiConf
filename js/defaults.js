@@ -144,11 +144,10 @@ APP.keyDefaults = {
 'LANG8': { y: 0, x: 0, w: 4, h: 4, group: 'international' },
 'LANG9': { y: 0, x: 0, w: 4, h: 4, group: 'international' },
 
-'APP': { y: 0, x: 0, w: 4, h: 4 },
-
 'EXEC': { y: 0, x: 0, w: 4, h: 4 },
 'HELP': { y: 0, x: 0, w: 4, h: 4 },
 'MENU': { y: 0, x: 0, w: 4, h: 4, group: 'standard' },
+'APP': { y: 0, x: 0, w: 4, h: 4, group: 'standard' },
 'SELECT': { y: 0, x: 0, w: 4, h: 4 },
 'STOP': { y: 0, x: 0, w: 4, h: 4 },
 'AGAIN': { y: 0, x: 0, w: 4, h: 4 },
