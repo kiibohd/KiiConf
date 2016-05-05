@@ -66,7 +66,7 @@ default_build() {
 	set -x
 
 	# NOTE: To add different layers -> -DPartialMaps="layer1 layer1a;layer2 layer2a;layer3"
-	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="${DEFAULT_MAP}" -DPartialMaps="${PARTIAL_MAPS}"
+	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="${DEFAULT_MAP}" -DPartialMaps="${PARTIAL_MAPS}" -DCONFIGURATOR=1
 	#cmake ${SOURCE_PATH} -DScanModule="MD1" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="${DEFAULT_MAP}" -DPartialMaps="${PARTIAL_MAPS}"
 	# Example working cmake command
 	#cmake ${SOURCE_PATH} -DScanModule="MD1" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="md1Overlay stdFuncMap" -DPartialMaps="hhkbpro2"
@@ -111,7 +111,7 @@ ergodox_build() {
 	cp ../*.kll .
 
 	# NOTE: To add different layers -> -DPartialMaps="layer1 layer1a;layer2 layer2a;layer3"
-	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DBaseMap="${!SIDE}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DDefaultMap="${ERGODOX_DEFAULT_MAP}" -DPartialMaps="${ERGODOX_PARTIAL_MAPS}"
+	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DBaseMap="${!SIDE}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DDefaultMap="${ERGODOX_DEFAULT_MAP}" -DPartialMaps="${ERGODOX_PARTIAL_MAPS}" -DCONFIGURATOR=1
 
 	# Build Firmware
 	make -j
