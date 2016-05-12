@@ -24,6 +24,7 @@ gulp.task('images', function() {
 
 gulp.task('js', function(){
     return gulp.src(['./@(js|lib)/*.js'])
+        .pipe($.babel())
         .pipe(gulp.dest('dist'))
 });
 

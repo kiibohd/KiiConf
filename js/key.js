@@ -199,11 +199,11 @@ Key.prototype = {
 			return
 		}
 
-		if ( !(value in APP.keyDefaults) ) {
+		if ( !(value in DEFAULTS.keyDefaults) ) {
 			console.log('Key not present in the default definition');
 			return;
 		}
-
+		var $label;
 		if ( !(layer in this.layers) ) {
 			$label = $('<div class="label layer-' + layer + '"></div>');
 			this.$element.append( $label );
@@ -213,7 +213,7 @@ Key.prototype = {
 
 		this.layers[layer] = {
 			key: value,
-			label: APP.keyDefaults[value].label || value
+			label: DEFAULTS.keyDefaults[value].label || value
 		};
 
 		$label.html( this.layers[layer].label );

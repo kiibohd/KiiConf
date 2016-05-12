@@ -42,6 +42,9 @@ APP.Class = function (debug) {
 		}
 	}
 
+	// Override the grid size
+	APP.GRID_SIZE = 10;
+
 	this.header = {};
 	this.matrix = [];
 
@@ -104,7 +107,7 @@ APP.Class.prototype = {
 
 		while ( match = regEx.exec(map) ) {
 			key = match[2].toUpperCase();
-			defaults = (key in APP.keyDefaults) ? APP.keyDefaults[key] : { x: 0, y: 0, w: 1, h: 1 };
+			defaults = (key in DEFAULTS.keyDefaults) ? DEFAULTS.keyDefaults[key] : { x: 0, y: 0, w: 1, h: 1 };
 
 			this.matrix.push( new APP.Key(this.$stage, {
 				code: match[1],

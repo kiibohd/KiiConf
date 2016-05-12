@@ -17,7 +17,7 @@
  */
 
 (function(window) {
-    var settings = {};
+    var settings = window.APPSETTINGS ||  {};
     settings.URI = ''; // If not empty end in '/'
     settings.VERSION = '0.3.0';
     settings.GENERATOR = 'KIICONF';
@@ -28,5 +28,4 @@
     settings.STAGE_HEIGHT = 0;
     
     window.APPSETTINGS = settings;
-
 })(window);

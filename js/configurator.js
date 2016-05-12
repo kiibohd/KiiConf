@@ -57,7 +57,7 @@ APP.Class = function (debug) {
 	var $shortcuts = $('#shortcuts');
 	var $shortcutsGroup;
 	var group = '';
-	$.each( APP.keyDefaults, function (k, v) {
+	$.each( DEFAULTS.keyDefaults, function (k, v) {
 		if ( 'group' in v ) {
 
 			if ( group != v.group ) {
@@ -223,11 +223,11 @@ APP.Class.prototype = {
 			e.which += 3000;
 		}
 
-		if ( !(e.which in APP.keyCodes) ) {
+		if ( !(e.which in DEFAULTS.keyCodes) ) {
 			return;
 		}
 
-		this._selectedKey.setKey( APP.keyCodes[e.which], this._selectedLayer );
+		this._selectedKey.setKey( DEFAULTS.keyCodes[e.which], this._selectedLayer );
 	},
 
 	deselectKeys: function (e) {
