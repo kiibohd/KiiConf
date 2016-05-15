@@ -19,7 +19,7 @@
 
 var APP = APP || {};
 
-(function (window, document) {
+(function (DEFAULTS, window, document) {
 
 // main application instance
 var _instance;
@@ -396,4 +396,4 @@ popup.prototype = {
 
 window.APP = APP;
 
-})(window, document);
+})(DEFAULTS, window, document);
