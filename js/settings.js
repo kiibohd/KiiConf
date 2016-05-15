@@ -22,8 +22,14 @@ var SETTINGS = (function(settings) {
     settings.GENERATOR = 'KIICONF';
 
     settings.GRID_SIZE = 13;
-    settings.KEY_SIZE = settings.GRID_SIZE * 4;
-    settings.STAGE_WIDTH = 0;	// they will be populated later
+
+    // Make this a property so the key size is correct even when
+    //  the grid size has been updated.
+    Object.defineProperty(settings, 'KEY_SIZE', {
+        get: function () { return settings.GRID_SIZE * 4; }
+    });
+
+    settings.STAGE_WIDTH = 0;   // they will be populated later
     settings.STAGE_HEIGHT = 0;
     
     return settings;

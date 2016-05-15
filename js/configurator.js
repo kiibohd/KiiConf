@@ -34,15 +34,6 @@ function APP (debug) {
 APP.Class = function (debug) {
 	var that = this;
 
-	// First assign through settings. This is a hack until this can be converted
-	// to a full module format.
-	var s = SETTINGS;
-	for (var p in s) {
-		if (s.hasOwnProperty(p)) {
-			APP[p] = s[p];
-		}
-	}
-
 	this.header = {};
 	this.matrix = [];
 
@@ -51,8 +42,8 @@ APP.Class = function (debug) {
 	this.$stage = $('#stage');
 	this.$document = $(document);
 
-	APP.STAGE_WIDTH = Math.floor(this.$stage.width() / APP.GRID_SIZE);
-	APP.STAGE_HEIGHT = Math.floor(this.$stage.height() / APP.GRID_SIZE);
+	SETTINGS.STAGE_WIDTH = Math.floor(this.$stage.width() / SETTINGS.GRID_SIZE);
+	SETTINGS.STAGE_HEIGHT = Math.floor(this.$stage.height() / SETTINGS.GRID_SIZE);
 
 	// create shortcuts
 	var $shortcuts = $('#shortcuts');
@@ -115,7 +106,7 @@ APP.Class = function (debug) {
 
 	$.ajax({
 		type: 'get',
-		url: APP.URI + 'renderedlayouts.php' + queryString, //TODO: send query params
+		url: SETTINGS.URI + 'renderedlayouts.php' + queryString, //TODO: send query params
 		success: function (response) {
 			$(response)//.fadeIn('slow')
 				.appendTo('#layout-list');
@@ -152,7 +143,7 @@ APP.Class.prototype = {
 			return;
 		}
 
-		$.getJSON(APP.URI + 'layouts/' + file + '.json', $.proxy(this.buildLayout, this) );
+		$.getJSON(SETTINGS.URI + 'layouts/' + file + '.json', $.proxy(this.buildLayout, this) );
 	},
 
 	buildLayout: function (layout) {
@@ -185,14 +176,14 @@ APP.Class.prototype = {
 		}
 
 		this.$stage.css({
-			top: -minY * APP.GRID_SIZE + 20 + 'px',
-			left: -minX * APP.GRID_SIZE + 20 + 'px'
+			top: -minY * SETTINGS.GRID_SIZE + 20 + 'px',
+			left: -minX * SETTINGS.GRID_SIZE + 20 + 'px'
 		});
 
 		$('#container').css({
 			marginTop: '0',
-			width: (maxX - minX) * APP.GRID_SIZE + 40 + 'px',
-			height: (maxY - minY) * APP.GRID_SIZE + 40 + 'px'
+			width: (maxX - minX) * SETTINGS.GRID_SIZE + 40 + 'px',
+			height: (maxY - minY) * SETTINGS.GRID_SIZE + 40 + 'px'
 		});
 
 		$('#shortcuts').show();
@@ -310,7 +301,7 @@ APP.Class.prototype = {
 
 		$.ajax({
 			type: 'post',
-			url: APP.URI + 'download.php',
+			url: SETTINGS.URI + 'download.php',
 			data: {
 				'map': JSON.stringify({ header: this.header, matrix: matrix }),
 			},
@@ -320,7 +311,7 @@ APP.Class.prototype = {
 					return;
 				}
 
-				window.location.href = APP.URI + response.filename;
+				window.location.href = SETTINGS.URI + response.filename;
 			},
 			error: function (response) {
 				alert('Connection error!');

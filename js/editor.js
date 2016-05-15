@@ -34,25 +34,16 @@ function APP (debug) {
 APP.Class = function (debug) {
 	var that = this;
 
-	// First assign through settings. This is a hack until this can be converted
-	// to a full module format.
-	var s = SETTINGS;
-	for (var p in s) {
-		if (s.hasOwnProperty(p)) {
-			APP[p] = s[p];
-		}
-	}
-
 	// Override the grid size
-	APP.GRID_SIZE = 10;
+	SETTINGS.GRID_SIZE = 10;
 
 	this.header = {};
 	this.matrix = [];
 
 	this.$stage = $('#stage');
 
-	APP.STAGE_WIDTH = Math.floor(this.$stage.width() / APP.GRID_SIZE);
-	APP.STAGE_HEIGHT = Math.floor(this.$stage.height() / APP.GRID_SIZE);
+	SETTINGS.STAGE_WIDTH = Math.floor(this.$stage.width() / SETTINGS.GRID_SIZE);
+	SETTINGS.STAGE_HEIGHT = Math.floor(this.$stage.height() / SETTINGS.GRID_SIZE);
 
 	// load button
 	$('#load-map').click(function () {
@@ -94,7 +85,7 @@ APP.Class.prototype = {
 			Author:    map.match(/Author ?= ?"?([^;"]*)"?;/i),
 			KLL:       map.match(/KLL ?= ?"?([^;"]*);"?/i),
 			'Date':    map.match(/Date ?= ?"?([^;"]*)"?;/i),
-			Generator: APP.GENERATOR + ' ' + APP.VERSION
+			Generator: SETTINGS.GENERATOR + ' ' + SETTINGS.VERSION
 		};
 
 		// normalize header
@@ -143,7 +134,7 @@ APP.Class.prototype = {
 
 		$.ajax({
 			type: 'post',
-			url: APP.URI + 'save.php',
+			url: SETTINGS.URI + 'save.php',
 			data: {
 				'map': JSON.stringify({ header: this.header, matrix: matrix }),
 			},

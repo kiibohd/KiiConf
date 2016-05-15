@@ -18,7 +18,7 @@
  */
 var APP = APP || {};
 
-(function (window, document) {
+(function (SETTINGS, window, document) {
 
 var _count = 0;
 
@@ -73,8 +73,8 @@ Key.prototype = {
 		this.y = y === undefined ? this.y : y;
 
 		this.$element.css({
-			left: this.x * APP.GRID_SIZE + 'px',
-			top:  this.y * APP.GRID_SIZE + 'px'
+			left: this.x * SETTINGS.GRID_SIZE + 'px',
+			top:  this.y * SETTINGS.GRID_SIZE + 'px'
 		});
 	},
 
@@ -89,8 +89,8 @@ Key.prototype = {
 		}
 
 		this.$element.css({
-			width: this.width * APP.GRID_SIZE + 'px',
-			height: this.height * APP.GRID_SIZE + 'px'
+			width: this.width * SETTINGS.GRID_SIZE + 'px',
+			height: this.height * SETTINGS.GRID_SIZE + 'px'
 		})
 	},
 
@@ -122,12 +122,12 @@ Key.prototype = {
 		var deltaX = e.pageX - this._mouseStartX;
 		//var deltaY = e.pageY - this._mouseStartY;
 
-		if ( Math.abs(deltaX) < APP.GRID_SIZE ) {
+		if ( Math.abs(deltaX) < SETTINGS.GRID_SIZE ) {
 			return;
 		}
 
-		deltaX = Math.floor( Math.abs(deltaX) / APP.GRID_SIZE ) * (deltaX > 0 ? 1 : deltaX < 0 ? -1 : 0);
-		//deltaY = Math.floor( Math.abs(deltaY) / APP.GRID_SIZE ) * (deltaY > 0 ? 1 : deltaY < 0 ? -1 : 0);
+		deltaX = Math.floor( Math.abs(deltaX) / SETTINGS.GRID_SIZE ) * (deltaX > 0 ? 1 : deltaX < 0 ? -1 : 0);
+		//deltaY = Math.floor( Math.abs(deltaY) / SETTINGS.GRID_SIZE ) * (deltaY > 0 ? 1 : deltaY < 0 ? -1 : 0);
 
 		this._mouseStartX = e.pageX;
 		//this._mouseStartY = e.pageY;
@@ -172,19 +172,19 @@ Key.prototype = {
 	},
 
 	dragMove: function (e) {
-		var x = Math.floor( (e.pageX - this._dragOffset.left) / APP.GRID_SIZE );
-		var y = Math.floor( (e.pageY - this._dragOffset.top)  / APP.GRID_SIZE );
+		var x = Math.floor( (e.pageX - this._dragOffset.left) / SETTINGS.GRID_SIZE );
+		var y = Math.floor( (e.pageY - this._dragOffset.top)  / SETTINGS.GRID_SIZE );
 
 		if ( x < 0 ) {
 			x = 0;
-		} else if ( x > APP.STAGE_WIDTH - this.width ) {
-			x = APP.STAGE_WIDTH - this.width;
+		} else if ( x > SETTINGS.STAGE_WIDTH - this.width ) {
+			x = SETTINGS.STAGE_WIDTH - this.width;
 		}
 
 		if ( y < 0 ) {
 			y = 0;
-		} else if ( y > APP.STAGE_HEIGHT - this.height ) {
-			y = APP.STAGE_HEIGHT - this.height;
+		} else if ( y > SETTINGS.STAGE_HEIGHT - this.height ) {
+			y = SETTINGS.STAGE_HEIGHT - this.height;
 		}
 
 		if ( this.x != x || this.y != y ) {
@@ -240,4 +240,4 @@ Key.prototype = {
 
 window.APP.Key = Key;
 
-})(window, document);
+})(SETTINGS, window, document);
