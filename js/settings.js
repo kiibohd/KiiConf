@@ -16,8 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function(window) {
-    var settings = window.APPSETTINGS ||  {};
+var SETTINGS = (function(settings) {
     settings.URI = ''; // If not empty end in '/'
     settings.VERSION = '0.3.0';
     settings.GENERATOR = 'KIICONF';
@@ -27,5 +26,5 @@
     settings.STAGE_WIDTH = 0;	// they will be populated later
     settings.STAGE_HEIGHT = 0;
     
-    window.APPSETTINGS = settings;
-})(window);
+    return settings;
+})(SETTINGS || {});

@@ -19,7 +19,7 @@
 
 var APP = APP || {};
 
-(function (DEFAULTS, window) {
+(function (DEFAULTS, SETTINGS, window) {
 
 // main application instance
 var _instance;
@@ -36,7 +36,7 @@ APP.Class = function (debug) {
 
 	// First assign through settings. This is a hack until this can be converted
 	// to a full module format.
-	var s = window.APPSETTINGS;
+	var s = SETTINGS;
 	for (var p in s) {
 		if (s.hasOwnProperty(p)) {
 			APP[p] = s[p];
@@ -218,4 +218,4 @@ popup.prototype = {
 
 window.APP = APP;
 
-})(DEFAULTS, window);
+})(DEFAULTS, SETTINGS, window);
