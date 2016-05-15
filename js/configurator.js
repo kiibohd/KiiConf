@@ -157,6 +157,9 @@ APP.Class.prototype = {
 		var maxX = 0;
 		var maxY = 0;
 
+		var this_ = this;
+		var fnOnSelect = function(key) { return this_.selectKey(key); };
+
 		for ( var i = 0, l = matrix.length; i < l; i++ ) {
 			minX = Math.min(minX, matrix[i].x);
 			minY = Math.min(minY, matrix[i].y);
@@ -171,7 +174,8 @@ APP.Class.prototype = {
 				y: matrix[i].y,
 				w: matrix[i].w,
 				h: matrix[i].h,
-				layers: matrix[i].layers
+				layers: matrix[i].layers,
+				onSelect: fnOnSelect
 			}) );
 		}
 
@@ -258,7 +262,7 @@ APP.Class.prototype = {
 	},
 
 	layerSelect: function (el, e) {
-		$el = $(el);
+		var $el = $(el);
 
 		$('#layers .selected').removeClass('selected');
 		$el.addClass('selected');

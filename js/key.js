@@ -16,9 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-var APP = APP || {};
+//var APP = APP || {};
 
-(function (SETTINGS, window, document) {
+APP.Key = (function (SETTINGS, window, document) {
 
 var _count = 0;
 
@@ -29,6 +29,7 @@ function Key ($stage, options) {
 
 	this.code = options.code;
 	this.layers = {};
+	this.onSelect = options.onSelect;
 
 	this.x = options.x;
 	this.y = options.y;
@@ -204,7 +205,10 @@ Key.prototype = {
 		this.$stage.find('.selected').removeClass('selected');
 		this.$element.addClass('selected');
 
-		APP().selectKey( this );
+		if ((this.onSelect !== undefined) && (this.onSelect !== null)) {
+			this.onSelect(this);
+		}
+		// APP().selectKey( this );
 	},
 
 	setKey: function (value, layer) {
@@ -238,6 +242,8 @@ Key.prototype = {
 	}
 };
 
-window.APP.Key = Key;
+//window.APP.Key = Key;
+
+	return Key;
 
 })(SETTINGS, window, document);
