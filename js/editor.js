@@ -19,7 +19,7 @@
 
 var APP = APP || {};
 
-(function (DEFAULTS, SETTINGS, window) {
+(function (DEFAULTS, SETTINGS, Key, window) {
 
 // main application instance
 var _instance;
@@ -101,7 +101,7 @@ APP.Class.prototype = {
 			key = match[2].toUpperCase();
 			defaults = (key in DEFAULTS.keyDefaults) ? DEFAULTS.keyDefaults[key] : { x: 0, y: 0, w: 1, h: 1 };
 
-			this.matrix.push( new APP.Key(this.$stage, {
+			this.matrix.push( new Key(this.$stage, {
 				code: match[1],
 				layers: {
 				 	0: {
@@ -209,4 +209,4 @@ popup.prototype = {
 
 window.APP = APP;
 
-})(DEFAULTS, SETTINGS, window);
+})(DEFAULTS, SETTINGS, Key, window);

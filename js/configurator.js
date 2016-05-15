@@ -19,7 +19,7 @@
 
 var APP = APP || {};
 
-(function (DEFAULTS, SETTINGS, window, document) {
+(function (DEFAULTS, SETTINGS, Key, window, document) {
 
 // main application instance
 var _instance;
@@ -166,7 +166,7 @@ APP.Class.prototype = {
 			maxX = Math.max(maxX, matrix[i].x + matrix[i].w);
 			maxY = Math.max(maxY, matrix[i].y + matrix[i].h);
 
-			this.matrix.push( new APP.Key(this.$stage, {
+			this.matrix.push( new Key(this.$stage, {
 				readonly: true,
 
 				code: matrix[i].code,
@@ -391,4 +391,4 @@ popup.prototype = {
 
 window.APP = APP;
 
-})(DEFAULTS, SETTINGS, window, document);
+})(DEFAULTS, SETTINGS, Key, window, document);

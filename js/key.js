@@ -16,9 +16,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-//var APP = APP || {};
 
-APP.Key = (function (SETTINGS, window, document) {
+var Key = (function (SETTINGS, window, document) {
 
 var _count = 0;
 
@@ -242,7 +241,6 @@ Key.prototype = {
 	}
 };
 
-//window.APP.Key = Key;
 
 	return Key;
 
