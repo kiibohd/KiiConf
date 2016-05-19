@@ -151,7 +151,6 @@ APP.Class.prototype = {
 		this.header = layout.header;
 
 		var matrix = layout.matrix;
-		var key;
 		var minX = Infinity;
 		var minY = Infinity;
 		var maxX = 0;
@@ -166,9 +165,10 @@ APP.Class.prototype = {
 			maxX = Math.max(maxX, matrix[i].x + matrix[i].w);
 			maxY = Math.max(maxY, matrix[i].y + matrix[i].h);
 
-			this.matrix.push( new Key(this.$stage, {
+			// TODO: Refactor to create matrix, then init in loop...
+			var key = Key.create();
+			key.init(this.$stage, {
 				readonly: true,
-
 				code: matrix[i].code,
 				x: matrix[i].x,
 				y: matrix[i].y,
@@ -176,7 +176,8 @@ APP.Class.prototype = {
 				h: matrix[i].h,
 				layers: matrix[i].layers,
 				onSelect: fnOnSelect
-			}) );
+			});
+			this.matrix.push(key);
 		}
 
 		this.$stage.css({

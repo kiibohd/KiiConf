@@ -101,17 +101,19 @@ APP.Class.prototype = {
 			key = match[2].toUpperCase();
 			defaults = (key in DEFAULTS.keyDefaults) ? DEFAULTS.keyDefaults[key] : { x: 0, y: 0, w: 1, h: 1 };
 
-			this.matrix.push( new Key(this.$stage, {
+			var k = Key.create();
+			k.init(this.$stage, {
 				code: match[1],
 				layers: {
-				 	0: {
-				 		key: key
-				 	}},
+					0: {
+						key: key
+					}},
 				x: defaults.x,
 				y: defaults.y,
 				w: defaults.w,
 				h: defaults.h
-			}) );
+			});
+			this.matrix.push(k);
 		}
 	},
 
