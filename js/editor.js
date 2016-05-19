@@ -47,12 +47,11 @@ APP.Class = function (debug) {
 
 	// load button
 	$('#load-map').click(function () {
-		new popup(
-			'Load new keyboard map',
+		var im = ImportMap.create();
+		im.popup('Load new keyboard map',
 			'load map',
 			'',
-			$.proxy(that.loadKeyboardMap, that)
-		);
+			that.loadKeyboardMap.bind(that));
 	});
 
 	// save button
@@ -154,58 +153,6 @@ APP.Class.prototype = {
 		this.matrix = [];
 
 		this.$stage.find('.key').remove();
-	}
-};
-
-
-function popup (title, action, value, cb) {
-	var that = this;
-
-	this.$cover = $('<div>')
-		.addClass('cover')
-		.appendTo('body');
-
-	this.$popup = $('<div>')
-		.addClass('popup')
-		.appendTo('body');
-
-	$('<h1>')
-		.html(title)
-		.appendTo(this.$popup);
-
-	var $map = $('<textarea>')
-		.html(value)
-		.appendTo(this.$popup);
-
-	var $buttons = $('<div>').appendTo(this.$popup);
-
-	$('<button>')
-		.attr('type', 'button')
-		.html('cancel')
-		.addClass('button-cancel')
-		.click( $.proxy(this.destroy, this) )
-		.appendTo($buttons);
-
-	$('<button>')
-		.attr('type', 'button')
-		.html(action)
-		.addClass('button-read')
-		.click(function () {
-			if ( !$map.val() ) {
-				alert('c\'mon be creative!');
-				return;
-			}
-
-			cb($map.val());
-			that.destroy();
-		})
-		.appendTo($buttons);
-}
-
-popup.prototype = {
-	destroy: function () {
-		this.$cover.remove();
-		this.$popup.remove();
 	}
 };
 

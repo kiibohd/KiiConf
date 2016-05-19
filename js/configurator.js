@@ -19,7 +19,7 @@
 
 var APP = APP || {};
 
-(function (DEFAULTS, SETTINGS, Key, window, document) {
+(function (DEFAULTS, SETTINGS, Key, ImportMap, window, document) {
 
 // main application instance
 var _instance;
@@ -65,12 +65,11 @@ APP.Class = function (debug) {
 
 	// import button
 	$('#import-map').click(function () {
-		new popup(
-			'Import a previously created layout</br>Must be valid json',
+		var im = ImportMap.create();
+		im.popup('Import a previously created layout</br>Must be valid json',
 			'import map',
 			'',
-			$.proxy(that.buildLayout, that)
-		);
+			json => that.buildLayout.call(that, $.parseJSON(json)));
 	});
 
 	// download button
@@ -339,57 +338,6 @@ APP.Class.prototype = {
 	}
 };
 
-function popup (title, action, value, cb) {
-	var that = this;
-
-	this.$cover = $('<div>')
-		.addClass('cover')
-		.appendTo('body');
-
-	this.$popup = $('<div>')
-		.addClass('popup')
-		.appendTo('body');
-
-	$('<h1>')
-		.html(title)
-		.appendTo(this.$popup);
-
-	var $map = $('<textarea>')
-		.html(value)
-		.appendTo(this.$popup);
-
-	var $buttons = $('<div>').appendTo(this.$popup);
-
-	$('<button>')
-		.attr('type', 'button')
-		.html('cancel')
-		.addClass('button-cancel')
-		.click( $.proxy(this.destroy, this) )
-		.appendTo($buttons);
-
-	$('<button>')
-		.attr('type', 'button')
-		.html(action)
-		.addClass('button-read')
-		.click(function () {
-			if ( !$map.val() ) {
-				alert('c\'mon be creative!');
-				return;
-			}
-
-			cb(jQuery.parseJSON($map.val()));
-			that.destroy();
-		})
-		.appendTo($buttons);
-}
-
-popup.prototype = {
-	destroy: function () {
-		this.$cover.remove();
-		this.$popup.remove();
-	}
-};
-
 window.APP = APP;
 
-})(DEFAULTS, SETTINGS, Key, window, document);
+})(DEFAULTS, SETTINGS, Key, ImportMap, window, document);
