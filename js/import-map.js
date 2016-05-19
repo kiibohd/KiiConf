@@ -18,6 +18,8 @@
  */
 
 var ImportMap = (function ($) {
+    'use strict';
+
     return {
         create: () => Object.create(ImportMap),
         popup: popup,

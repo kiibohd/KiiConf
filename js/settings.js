@@ -17,6 +17,8 @@
  */
 
 var SETTINGS = (function(settings) {
+    'use strict';
+
     settings.URI = ''; // If not empty end in '/'
     settings.VERSION = '0.3.0';
     settings.GENERATOR = 'KIICONF';

@@ -18,6 +18,8 @@
  */
 
 var Key = (function (SETTINGS, window, document) {
+    'use strict';
+
     var _count = 0;
 
     return {

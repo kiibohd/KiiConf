@@ -18,6 +18,7 @@
  */
 
 var DEFAULTS = (function (def) {
+    'use strict';
 
     def.keyDefaults = keyDefaults();
     def.keyCodes = keyCodes();

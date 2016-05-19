@@ -1,4 +1,6 @@
 (function (Math) {
+    'use strict';
+
     /**
      * Math.sign polyfill from MDN
      * @type {Function}
