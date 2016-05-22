@@ -27,8 +27,6 @@ var ImportMap = (function ($) {
     };
     
     function popup (title, action, value, cb) {
-        var that = this;
-
         this.$cover = $('<div>')
             .addClass('cover')
             .appendTo('body');
@@ -58,14 +56,14 @@ var ImportMap = (function ($) {
             .attr('type', 'button')
             .html(action)
             .addClass('button-read')
-            .click(function () {
+            .click(() => {
                 if ( !$map.val() ) {
                     alert('c\'mon be creative!');
                     return;
                 }
 
                 cb($map.val());
-                that.destroy();
+                this.destroy();
             })
             .appendTo($buttons);
     }

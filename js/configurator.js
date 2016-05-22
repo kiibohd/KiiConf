@@ -34,7 +34,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         clearLayout: clearLayout,
         downloadMap: downloadMap,
         getUrlParameters: getUrlParameters //TODO: Move to util module
-    }
+    };
 
     // TODO: Break this up...
     function init() {

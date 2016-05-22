@@ -23,7 +23,7 @@ var Key = (function (SETTINGS, window, document) {
     var _count = 0;
 
     return {
-        create: function () { return Object.create(Key); },
+        create: () => Object.create(Key),
         init: init,
 
         move: move,

@@ -18,6 +18,8 @@
 */
 
 var Editor = (function (DEFAULTS, SETTINGS, Key) {
+    'use strict';
+    
     return {
         create: () => Object.create(Editor),
         init: init,
