@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>KII Keyboard Editor</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>KII Keyboard Editor</title>
 
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<script src="lib/jquery-2.2.1.min.js"></script>
-	<script src="js/polyfills.js"></script>
-	<script src="js/settings.js"></script>
-	<script src="js/defaults.js"></script>
-	<script src="js/key.js"></script>
-	<script src="js/import-map.js"></script>
-	<script src="js/editor.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="lib/jquery-2.2.1.min.js"></script>
+    <script src="js/polyfills.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/defaults.js"></script>
+    <script src="js/key.js"></script>
+    <script src="js/import-map.js"></script>
+    <script src="js/editor.js"></script>
 </head>
 <body class="editor"><!-- set to false in production -->
 
 <div id="wrapper" class="wrapper">
-	<nav class="cf">
-		<button type="button" id="load-map" class="button-read">load KII map</button>
-		<button type="button" id="save-map" class="button-write">save layout</button>
-		<input type="text" name="name" value="" id="kii-name" placeholder="untitled"> @
-		<input type="text" name="layout" value="" id="kii-layout" placeholder="default">
-	</nav>
+    <nav class="cf">
+        <button type="button" id="load-map" class="button-read">load KII map</button>
+        <button type="button" id="save-map" class="button-write">save layout</button>
+        <input type="text" name="name" value="" id="kii-name" placeholder="untitled"> @
+        <input type="text" name="layout" value="" id="kii-layout" placeholder="default">
+    </nav>
 
-	<div id="stage" class="stage">
+    <div id="stage" class="stage">
 
-	</div>
+    </div>
 </div>
 <script>
-	$(document).ready(function (){ Editor.create().init(true); });
+    $(document).ready(function (){ Editor.create().init(true); });
 </script>
 </body>
 </html>
