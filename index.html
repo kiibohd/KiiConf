@@ -14,7 +14,7 @@
 	<script src="js/import-map.js"></script>
 	<script src="js/configurator.js"></script>
 </head>
-<body onload="APP(false)" class="configurator">
+<body class="configurator">
 
 <div id="wrapper" class="wrapper">
 	<nav class="cf">
@@ -47,6 +47,8 @@
 		<li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
 	</ul>
 </div>
-
+<script>
+	$(document).ready(function (){ Configurator.create().init(); });
+</script>
 </body>
 </html>
