@@ -14,7 +14,7 @@
 	<script src="js/import-map.js"></script>
 	<script src="js/editor.js"></script>
 </head>
-<body onload="APP(true)" class="editor"><!-- set to false in production -->
+<body class="editor"><!-- set to false in production -->
 
 <div id="wrapper" class="wrapper">
 	<nav class="cf">
@@ -28,6 +28,8 @@
 
 	</div>
 </div>
-
+<script>
+	$(document).ready(function (){ Editor.create().init(true); });
+</script>
 </body>
 </html>
