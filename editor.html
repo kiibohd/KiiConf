@@ -6,9 +6,12 @@
     <title>KII Keyboard Editor</title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="lib/polyfill.min.js"></script>
+    <script src="lib/dom4-1.8.3.min.js"></script>
     <script src="lib/jquery-2.2.1.min.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/defaults.js"></script>
+    <script src="js/emitter.js"></script>
     <script src="js/key.js"></script>
     <script src="js/import-map.js"></script>
     <script src="js/editor.js"></script>
@@ -23,12 +26,16 @@
         <input type="text" name="layout" value="" id="kii-layout" placeholder="default">
     </nav>
 
+    <div id="alert" class="hide">
+        <span class="alert">We've reloaded where you left off last time!</span>
+    </div>
+
     <div id="stage" class="stage">
 
     </div>
 </div>
 <script>
-    $(document).ready(function (){ Editor.create().init(true); });
+    $(document).ready(function (){ Editor.create().init(false); });
 </script>
 </body>
 </html>

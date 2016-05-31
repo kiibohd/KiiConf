@@ -129,7 +129,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
                     $el.toggleClass('show');
 
                     if ( $el.hasClass('show') ) {
-                        this.$document.one('click', function () {
+                        that.$document.one('click', function () {
                             $el.removeClass('show');
                         });
                     }
@@ -180,8 +180,8 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
                 w: matrix[i].w,
                 h: matrix[i].h,
                 layers: matrix[i].layers,
-                onSelect: this.selectKey.bind(this),
             });
+            key.on('select', this.selectKey.bind(this));
             this.matrix.push(key);
         }
 

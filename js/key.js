@@ -17,12 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var Key = (function (SETTINGS, window, document) {
+var Key = (function (SETTINGS, Emitter, window, document) {
     'use strict';
 
     var _count = 0;
 
-    return {
+    var base = Object.create(Emitter);
+    var ext = {
         create: () => Object.create(Key),
         init: init,
 
@@ -40,6 +41,10 @@ var Key = (function (SETTINGS, window, document) {
         dragEnd: dragEnd,
     };
 
+    Object.assign(base, ext);
+
+    return base;
+
     function init($stage, options) {
         _count++;
 
@@ -52,7 +57,7 @@ var Key = (function (SETTINGS, window, document) {
         // size in units ( 1 = 0.25u, 4 = 1u, 6 = 1.5u )
         this.width = options.w;
         this.height = options.h;
-        this.onSelect = options.onSelect;  // TODO: private?
+
         this.$stage = $stage; // TODO: private?
 
         this.$element = $('<div>')
@@ -79,9 +84,11 @@ var Key = (function (SETTINGS, window, document) {
 
             this.$element.find('.resize-ew')
                 .on('mousedown', this.resizeStart.bind(this));
-        } else {
-            this.$element.on('click', this.select.bind(this));
         }
+        // else {
+        //     this.$element.on('click', this.select.bind(this));
+        // }
+        this.$element.on('click', this.select.bind(this));
 
         this.$stage.append(this.$element);
     }
@@ -99,6 +106,8 @@ var Key = (function (SETTINGS, window, document) {
             left: this.x * SETTINGS.GRID_SIZE + 'px',
             top:  this.y * SETTINGS.GRID_SIZE + 'px'
         });
+
+        this.emit('move', this);
     }
 
     /**
@@ -130,6 +139,8 @@ var Key = (function (SETTINGS, window, document) {
             width: this.width * SETTINGS.GRID_SIZE + 'px',
             height: this.height * SETTINGS.GRID_SIZE + 'px'
         })
+
+        this.emit('resize', this);
     }
 
     /**
@@ -256,9 +267,7 @@ var Key = (function (SETTINGS, window, document) {
         this.$stage.find('.selected').removeClass('selected');
         this.$element.addClass('selected');
 
-        if ((this.onSelect !== undefined) && (this.onSelect !== null)) {
-            this.onSelect(this);
-        }
+        this.emit('select', this);
     }
 
     /**
@@ -294,5 +303,7 @@ var Key = (function (SETTINGS, window, document) {
         };
 
         $label.html(this.layers[layer].label);
+        
+        this.emit('setKey', this);
     }
-})(SETTINGS, window, document);
+})(SETTINGS, Emitter, window, document);

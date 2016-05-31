@@ -519,4 +519,89 @@ nav {
 	float: right;
 }
 
+// Alert -- TODO: Customize to better suit, and use auto-prefixer
+
+#alert {
+	position: relative;
+	z-index: 200;
+}
+
+#alert.hide {
+	display: none;
+}
+
+#alert:hover:after {
+	background: hsla(0,0%,0%,.8);
+	border-radius: 3px;
+	color: #f6f6f6;
+	content: 'Click to dismiss';
+	font: bold 12px/30px sans-serif;
+	height: 30px;
+	left: 50%;
+	margin-left: -60px;
+	position: absolute;
+	text-align: center;
+	top: 50px;
+	width: 120px;
+}
+
+#alert:hover:before {
+	border-bottom: 10px solid hsla(0,0%,0%,.8);
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	content: '';
+	height: 0;
+	left: 50%;
+	margin-left: -10px;
+	position: absolute;
+	top: 40px;
+	width: 0;
+}
+
+.alert {
+	background-color: rgba(4, 178, 123, 0.68);
+	box-shadow: 0 5px 0 hsla(0,0%,0%,.1);
+	color: #f6f6f6;
+	cursor: pointer;
+	display: block;
+	font: bold 16px/40px sans-serif;
+	height: 40px;
+	position: absolute;
+	text-align: center;
+	text-decoration: none;
+	top: -45px;
+	width: 100%;
+	-webkit-animation: alert 1s ease forwards;
+	-moz-animation: alert 1s ease forwards;
+	-ms-animation: alert 1s ease forwards;
+	-o-animation: alert 1s ease forwards;
+	animation: alert 1s ease forwards;
+}
+
+@-webkit-keyframes alert {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { top: 0; }
+}
+@-moz-keyframes alert {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { top: 0; }
+}
+@-ms-keyframes alert {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { top: 0; }
+}
+@-o-keyframes alert {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { top: 0; }
+}
+@keyframes alert {
+	0% { opacity: 0; }
+	50% { opacity: 1; }
+	100% { top: 0; }
+}
+
 // configurator

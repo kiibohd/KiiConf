@@ -23,10 +23,15 @@ gulp.task('images', function() {
 });
 
 gulp.task('js', function(){
-    return gulp.src(['./@(js|lib)/*.js'])
+    return gulp.src(['./@(js)/*.js'])
         .pipe($.babel())
         .pipe(gulp.dest('dist'))
 });
+
+gulp.task('lib', function () {
+    return gulp.src(['./lib/*.js', './node_modules/babel-polyfill/dist/*.js'])
+        .pipe(gulp.dest('dist/lib'))
+})
 
 gulp.task('extras', function() {
     return gulp.src(['./**/*.@(json|bash)', '!./*.json', '!./@(node_modules|dist|controller|tmp|.*)/**/*.*'])
@@ -41,7 +46,7 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('build', ['less', 'html', 'js', 'images', 'extras'], function () {
+gulp.task('build', ['less', 'html', 'js', 'lib', 'images', 'extras'], function () {
     return gulp.src('dist/**/*', {base: 'dist'})
         .pipe(revAll.revision())
         .pipe($.revDeleteOriginal())
