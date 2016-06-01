@@ -2,11 +2,11 @@
     "header": {
         "Name": "WhiteFox",
         "Layout": "AriaBlank",
-        "Base": "AllBlank",
+        "Base": "AriaBlank",
         "Version": "0.2",
         "Author": "HaaTa (Jacob Alexander) 2015",
         "KLL": "0.3c",
-        "Date": "2015-08-16",
+        "Date": "2016-05-30",
         "Generator": "KIICONF 0.2"
     },
     "matrix": [
