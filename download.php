@@ -33,7 +33,7 @@ foreach ( $map->matrix as $i => $key ) {
 $header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$map->header, array_keys((array)$map->header)));
 $files = array();
 $file_args = array();
-$controller_ver = $_SERVER['REMOTE_ADDR'] == '127.0.0.1' || '::1' ? '' : json_decode(file_get_contents('http://configurator.input.club/stats.json'));
+$controller_ver = ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') ? '' : json_decode(file_get_contents('http://configurator.input.club/stats.json'));
 if ( $controller_ver !== '' ) {
 	$controller_ver = $controller_ver->controller->gitrev . $controller_ver->kll->gitrev;
 }
