@@ -3,3 +3,5 @@ tmp/*.zip
 tmp/*/
 stats.json
 controller/*
+dist/*
+node_modules/*
