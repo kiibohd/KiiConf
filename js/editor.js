@@ -121,6 +121,8 @@ var Editor = (function (DEFAULTS, SETTINGS, Key, document, window) {
             key.on('setKey', dk);
             this.matrix.push(key);
         }
+
+        this.keymapChanged();
     }
 
     function selectKey(key) {
