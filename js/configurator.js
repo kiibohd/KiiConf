@@ -20,6 +20,8 @@
 var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, document) {
     'use strict';
 
+    const lastMapKey = 'configurator-last-loaded-map';
+
     return {
         create: () => Object.create(Configurator),
         init: init,
@@ -111,6 +113,11 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
 
         if (params.hasOwnProperty('layout')) {
             queryString = '?layout=' + params['layout'][0];
+        } else {
+            var lastMap = window.localStorage.getItem(lastMapKey);
+            if (lastMap) {
+                queryString = '?layout=' + lastMap;
+            }
         }
 
         $.ajax({
@@ -152,6 +159,8 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         }
 
         $.getJSON(SETTINGS.URI + 'layouts/' + file + '.json', this.buildLayout.bind(this));
+
+        window.localStorage.setItem(lastMapKey, file);
     }
 
     function buildLayout(layout) {
