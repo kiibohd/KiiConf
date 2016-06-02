@@ -2,7 +2,7 @@
     "header": {
         "Name": "WhiteFox",
         "Layout": "WinkeylessBlank",
-        "Base": "WinkeylessBlank",
+        "Base": "AllBlank",
         "Version": "0.2",
         "Author": "HaaTa (Jacob Alexander) 2015",
         "KLL": "0.3c",
