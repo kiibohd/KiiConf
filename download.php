@@ -24,11 +24,34 @@ $default = $default->matrix;
 $layers = array();
 
 // Find the differences between the default map and the user's map
-foreach ( $map->matrix as $i => $key ) {
-	foreach ( $key->layers as $l => $layer ) {
-		$layers[$l][$default[$i]->layers->{0}->key] = $layer->key;
+if ($name == 'WhiteFox') {
+	// WhiteFox layouts have fewer keys than the defaultMap so we need to verify based
+	//  upon the scan codes rather than just a sequence. Long term this method should
+	//  probably be the preferred method for building up layer files
+	foreach ( $map->matrix as $i => $key ) {
+		// First find the corresponding key via scan code
+		$idxInDef = -1;
+		foreach ( $default as $j => $defkey ) {
+			if ($key->code == $defkey->code) {
+				$idxInDef = $j;
+				break;
+			}
+		}
+		if ($idxInDef >= 0) {
+			foreach ( $key->layers as $l => $layer ) {
+				$layers[$l][$default[$idxInDef]->layers->{0}->key] = $layer->key;
+			}
+		}
 	}
 }
+else {
+	foreach ( $map->matrix as $i => $key ) {
+		foreach ( $key->layers as $l => $layer ) {
+			$layers[$l][$default[$i]->layers->{0}->key] = $layer->key;
+		}
+	}
+}
+
 
 $header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$map->header, array_keys((array)$map->header)));
 $files = array();
