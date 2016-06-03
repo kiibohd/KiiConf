@@ -64,7 +64,7 @@ APP.Class = function (debug) {
 				group = v.group;
 			}
 
-			$shortcutsGroup.append('<li><span class="shortcut-button" data-key="' + k + '">' + ( v.label || k ) + '</span></li>');
+			$shortcutsGroup.append('<li><span class="shortcut-button" data-key="' + k.replace('"', '&quot;') + '">' + ( v.label || k ) + '</span></li>');
 		}
 	});
 

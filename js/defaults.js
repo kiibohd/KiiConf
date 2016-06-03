@@ -353,6 +353,8 @@ APP.keyDefaults = {
 "#:'<'": { label: '<', group: 'simple macros' },
 "#:'>'": { label: '>', group: 'simple macros' },
 "#:'?'": { label: '?', group: 'simple macros' },
+"#:':'": { label: ':', group: 'simple macros' },
+"#:'\"'": { label: '"', group: 'simple macros' },
 
 };
 
