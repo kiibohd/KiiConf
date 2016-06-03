@@ -603,7 +603,8 @@ var DEFAULTS = (function (def) {
             "#:'<'": {label: '<', group: 'simple macros'},
             "#:'>'": {label: '>', group: 'simple macros'},
             "#:'?'": {label: '?', group: 'simple macros'},
-
+            "#:':'": {label: ':', group: 'simple macros'},
+            "#:'\"'": {label: '"', group: 'simple macros'},
         };
     }
 
