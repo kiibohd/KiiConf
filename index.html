@@ -24,8 +24,15 @@
         <button type="button" id="import-map" class="button-read">import map</button>
         <input type="button" onclick="window.top.location.href='https://github.com/kiibohd/KiiConf';" value="Wiki" />
         <input type="button" onclick="location.href='stats.json';" value="Version" />
-        <button type="button" id="download-map" class="button-write floatright">download firmware</button>
+        <div class="floatright">
+            <button type="button" id="revert-layout" class="button-revert" disabled>revert changes</button>
+            <button type="button" id="download-map" class="button-write floatright">download firmware</button>
+        </div>
     </nav>
+
+    <div id="alert" class="hide">
+        <span class="alert">We've reloaded where you left off last time!</span>
+    </div>
 
     <ul id="layers" class="tabs">
         <li class="tab-layer-0 selected"><input id="layer-check-0" type="checkbox" value="0" checked title="toggle visibility">Main</li>

@@ -21,8 +21,10 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
     'use strict';
 
     const lastMapKey = 'configurator-last-loaded-map';
+    const prevEditsKey = 'configurator-prev-edits';
 
-    return {
+    var conf = Object.create(Emitter);
+    var ext =  {
         create: () => Object.create(Configurator),
         init: init,
         loadLayout: loadLayout,
@@ -35,8 +37,16 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         displayLayers: displayLayers,
         clearLayout: clearLayout,
         downloadMap: downloadMap,
+        keymapChanged: keymapChanged,
+        setDirty: setDirty,
+        serializeKeyboardMap: serializeKeyboardMap,
+        revertLayout: revertLayout,
         getUrlParameters: getUrlParameters //TODO: Move to util module
     };
+
+    Object.assign(conf, ext);
+
+    return conf;
 
     // TODO: Break this up...
     function init() {
@@ -44,6 +54,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         this.matrix = [];
 
         this._selectedLayer = 0;
+        this._dirty = false;
 
         this.$stage = $('#stage');
         this.$document = $(document);
@@ -98,6 +109,15 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         $('#layers input').on('click', function (e) {
             e.stopPropagation();
             that.displayLayers.call(that, this);
+        });
+
+        // Revert layout button
+        var revLayout = document.getElementById("revert-layout");
+
+        revLayout.addEventListener('click', this.revertLayout.bind(this));
+
+        this.on('dirty', (_, dirty) => {
+            revLayout.disabled = !dirty;
         });
 
         // deselect keys
@@ -158,12 +178,37 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
             return;
         }
 
-        $.getJSON(SETTINGS.URI + 'layouts/' + file + '.json', this.buildLayout.bind(this));
+        var loadOrigOrPrev = layout => {
+            this._unmodified = layout;
+            var prev = window.localStorage.getItem(prevEditsKey);
+            prev = prev ? JSON.parse(prev) : {};
+            if (prev[layout.header.Name] && prev[layout.header.Name][layout.header.Layout]) {
+                this.buildLayout(prev[layout.header.Name][layout.header.Layout]);
+                this.setDirty(true);
+                //TODO: Replace with template.
+                //TODO: Make a cross-page module.
+                var alert = document.getElementById("alert");
+
+                alert.classList.remove('hide');
+
+                var dismiss = () => {
+                    alert.classList.add('hide');
+                    alert.removeEventListener('click', dismiss);
+                };
+
+                alert.addEventListener('click', dismiss);
+            } else {
+                this.buildLayout(layout)
+            }
+        };
+
+        $.getJSON(SETTINGS.URI + 'layouts/' + file + '.json', loadOrigOrPrev);
 
         window.localStorage.setItem(lastMapKey, file);
     }
 
     function buildLayout(layout) {
+        this.setDirty(false);
         this.clearLayout();
         this.header = layout.header;
 
@@ -191,6 +236,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
                 layers: matrix[i].layers,
             });
             key.on('select', this.selectKey.bind(this));
+            key.on('setKey', this.keymapChanged.bind(this));
             this.matrix.push(key);
         }
 
@@ -336,6 +382,55 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
                 alert('Connection error!');
             }
         });
+    }
+
+    function serializeKeyboardMap() {
+        var matrix = [];
+
+        $.each(this.matrix, (k, v) => {
+            matrix.push({
+                code: v.code,
+                x: v.x,
+                y: v.y,
+                w: v.width,
+                h: v.height,
+                layers: v.layers
+            });
+        });
+
+        return { header: this.header, matrix: matrix };
+    }
+
+    function keymapChanged() {
+        this.setDirty(true);
+
+        // Save a previous edit -- should be debounced.
+        var prev = window.localStorage.getItem(prevEditsKey);
+        prev = prev ? JSON.parse(prev) : {};
+
+        prev[this.header.Name] = prev[this.header.Name] || {};
+        prev[this.header.Name][this.header.Layout] = this.serializeKeyboardMap();
+        var serialized = JSON.stringify(prev);
+        window.localStorage.setItem(prevEditsKey, serialized);
+    }
+
+    function setDirty(dirty) {
+        if (dirty === this._dirty) {
+            return;
+        }
+        var old = this._dirty;
+
+        this._dirty = dirty;
+
+        this.emit('dirty', this, this._dirty, old);
+    }
+
+    function revertLayout() {
+        if (!this._unmodified) {
+            return;
+        }
+
+        this.buildLayout(this._unmodified);
     }
 
     function getUrlParameters() {

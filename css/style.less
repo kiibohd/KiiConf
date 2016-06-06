@@ -223,6 +223,15 @@ big {
 	background: #D73600;
 }
 
+.button-revert {
+	background: #FF7619;
+}
+
+button:disabled {
+	background: #ddd;
+	color: #444;
+}
+
 .button-cancel {
 	background: #999;
 }
@@ -526,10 +535,6 @@ nav {
 	z-index: 200;
 }
 
-#alert.hide {
-	display: none;
-}
-
 #alert:hover:after {
 	background: hsla(0,0%,0%,.8);
 	border-radius: 3px;
@@ -602,6 +607,10 @@ nav {
 	0% { opacity: 0; }
 	50% { opacity: 1; }
 	100% { top: 0; }
+}
+
+.hide {
+	display: none;
 }
 
 // configurator
