@@ -21,7 +21,7 @@
     "build:js": "mkdir -p dist/lib && cp lib/*.js ./node_modules/babel-polyfill/dist/*.min.js dist/lib && babel ./js -d dist/js -s",
     "build:env": "mkdir -p dist/layouts dist/cgi-bin && cp layouts/*.json dist/layouts && cp cgi-bin/*.bash dist/cgi-bin",
     "build:code": "npm run build:html && npm run build:css && npm run build:img && npm run build:js && npm run build:env",
-    "build:watch": "watch 'npm run build:code' . -d --filter=dev-watch.js --wait=10",
+    "build:watch": "watch 'npm run build:code' . -d --filter=dev-watch.js --wait=30 --interval=30",
     "build": "npm run clean -s && npm run build:link && npm run build:code",
     "dev": "npm run build && npm run build:watch"
   },
