@@ -112,12 +112,11 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         });
 
         // Revert layout button
-        var revLayout = document.getElementById("revert-layout");
-
-        revLayout.addEventListener('click', this.revertLayout.bind(this));
+        var $revLayout = $("#revert-layout")
+            .on('click', this.revertLayout.bind(this));
 
         this.on('dirty', (_, dirty) => {
-            revLayout.disabled = !dirty;
+            $revLayout.prop('disabled', !dirty);
         });
 
         // deselect keys
@@ -187,16 +186,15 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
                 this.setDirty(true);
                 //TODO: Replace with template.
                 //TODO: Make a cross-page module.
-                var alert = document.getElementById("alert");
-
-                alert.classList.remove('hide');
+                var $alert = $('#alert')
+                    .removeClass('hide');
 
                 var dismiss = () => {
-                    alert.classList.add('hide');
-                    alert.removeEventListener('click', dismiss);
+                    $alert.addClass('hide')
+                        .off('click', dismiss);
                 };
 
-                alert.addEventListener('click', dismiss);
+                $alert.on('click', dismiss);
             } else {
                 this.buildLayout(layout)
             }

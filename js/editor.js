@@ -79,16 +79,15 @@ var Editor = (function (DEFAULTS, SETTINGS, Key, document, window) {
                 this.loadKeyboardMap(map);
 
                 //TODO: Replace with template.
-                var alert = document.getElementById("alert");
-
-                alert.classList.remove('hide');
+                var $alert = $('#alert')
+                    .removeClass('hide');
 
                 var dismiss = () => {
-                    alert.classList.add('hide');
-                    alert.removeEventListener('click', dismiss);
+                    $alert.addClass('hide')
+                        .off('click', dismiss);
                 };
 
-                alert.addEventListener('click', dismiss);
+                $alert.on('click', dismiss);
             }
         }
     }
