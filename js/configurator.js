@@ -88,7 +88,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
             im.popup('Import a previously created layout</br>Must be valid json',
                 'import map',
                 '',
-                json => this.buildLayout($.parseJSON(json)));
+                json => this.buildLayout(JSON.parse(json)));
         });
 
         // download button
