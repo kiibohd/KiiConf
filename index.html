@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="lib/polyfill.min.js"></script>
     <script src="lib/jquery.min.js"></script>
+    <script src="lib/lodash.min.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/defaults.js"></script>
     <script src="js/emitter.js"></script>
@@ -50,10 +51,16 @@
 </div>
 
 <div id="shortcuts" class="shortcuts cf" style="display:none">
-    <ul id="group-special" class="group">
-        <li class="title">special</li>
-        <li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
-    </ul>
+    <!-- Need to move this creation with the others -->
+    <div id="group-special" class="group">
+        <div class="title">
+            <span class="title-name">special</span>
+            <span class="toggle-vis" data-group="special">[hide]</span>
+        </div>
+        <ul>
+            <li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
+        </ul>
+    </div>
 </div>
 <script>
     $(document).ready(function (){ Configurator.create().init(); });

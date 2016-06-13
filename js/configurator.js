@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, document) {
+var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, document, _) {
     'use strict';
 
     const lastMapKey = 'configurator-last-loaded-map';
@@ -62,25 +62,47 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         SETTINGS.STAGE_WIDTH = Math.floor(this.$stage.width() / SETTINGS.GRID_SIZE);
         SETTINGS.STAGE_HEIGHT = Math.floor(this.$stage.height() / SETTINGS.GRID_SIZE);
 
+        var groupTmpl = _.template(
+`<div id="group-<%= x.safeGroup %>" class="group">
+    <div class="title">
+        <span class="title-name"><%= x.group %></span>
+        <span class="toggle-vis" data-group="<%= x.safeGroup %>">[hide]</span>
+    </div>
+    <ul></ul>
+</div>`, { variable: 'x' });
+
+        var keyTmpl = _.template(
+`<li>
+    <span class="shortcut-button" data-key="<%- x.key %>"><%= x.value.label || x.key %></span>
+</li>`, {variable: 'x'});
+
         // create shortcuts
         var $shortcuts = $('#shortcuts');
         var $shortcutsGroup;
         var group = '';
         $.each(DEFAULTS.keyDefaults, function (k, v) {
             if ('group' in v) {
-
+                v.safeGroup = v.group.replace(' ', '_');
                 if (group != v.group) {
-                    $shortcutsGroup = $('#group-' + v.group).length
-                        ? $('#group-' + v.group)
-                        : $('<ul id="group-' + v.group + '" class="group"><li class="title">' + v.group + '</li></ul>')
-                            .appendTo($shortcuts);
+                    $shortcutsGroup = $('#group-' + v.group);
+                    $shortcutsGroup = $shortcutsGroup.length > 0
+                        ? $shortcutsGroup
+                        : $(groupTmpl(v)).appendTo($shortcuts);
                     group = v.group;
                 }
 
-                $shortcutsGroup.append('<li><span class="shortcut-button" data-key="' + k.replace('"', '&quot;') + '">' + ( v.label || k ) + '</span></li>');
+                $shortcutsGroup.children('ul').append(keyTmpl({key: k, value: v}));
             }
         });
         $shortcuts.on('click', this.shortcut.bind(this));
+
+        $('.toggle-vis').on('click', function(e) {
+            var $elem = $(this);
+            var group = $elem.data('group');
+            var $groupList = $('#group-' + group + ' ul');
+            $groupList.toggleClass('hide');
+            $elem.text($groupList.hasClass('hide') ? '[show]' : '[hide]');
+        });
 
         // import button
         $('#import-map').click(() => {
@@ -444,4 +466,4 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
 
         return qd;
     }
-})(DEFAULTS, SETTINGS, Key, ImportMap, window, document);
+})(DEFAULTS, SETTINGS, Key, ImportMap, window, document, _);
