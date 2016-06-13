@@ -1,0 +1,38 @@
+0.4.0 TBD
+
+  [Enhancements]
+
+  * When navigating to the root of the site the last layout loaded (e.g.
+    WhiteFox TrueFox) will be loaded.
+
+  * When loading a layout if the user previously made changes to, these will be
+    loaded automatically (stored in local storage) and a message displayed.
+
+  * A new "revert changes" button was added to clear any user changes made to
+    the layout.
+
+  * Key groups now have a show/hide toggle.
+
+  * NPM based build scripts.
+
+  [Bug Fixes]
+
+  * OSX Compatibility fix for the build scripts
+
+  [Internal]
+
+  * Moved index from a PHP page to a pure HTML page
+
+  * Upgraded to jQuery 3.x
+
+  * Utilizing Babel.js for ES6 features.
+
+  * Extensive code refactoring to move to a more modular format.
+
+0.3.* Saturday, June 4th, 2016
+
+  * Added ':' and '"' simple macros.
+
+  [Bug Fixes]
+
+  * Fixed issues with WhiteFox Layout generation.

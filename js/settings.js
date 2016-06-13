@@ -20,7 +20,7 @@ var SETTINGS = (function(settings) {
     'use strict';
 
     settings.URI = ''; // If not empty end in '/'
-    settings.VERSION = '0.3.0';
+    settings.VERSION = '0.4.0';
     settings.GENERATOR = 'KIICONF';
 
     settings.GRID_SIZE = 13;
