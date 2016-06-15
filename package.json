@@ -16,7 +16,7 @@
     "clean": "rm -r dist/*",
     "build:link": "ln -sf \"$PWD/controller\" dist/controller && ln -sf \"$PWD/tmp\" dist/tmp",
     "build:css": "lessc css/style.less dist/css/style.css",
-    "build:html": "cp *.html *.php dist/",
+    "build:html": "cp *.html *.php stats.json dist/",
     "build:img": "mkdir -p dist/img && cp img/*.png dist/img",
     "build:js": "mkdir -p dist/lib && cp lib/*.js ./node_modules/babel-polyfill/dist/*.min.js dist/lib && babel ./js -d dist/js -s",
     "build:env": "mkdir -p dist/layouts dist/cgi-bin && cp layouts/*.json dist/layouts && cp cgi-bin/*.bash dist/cgi-bin",
