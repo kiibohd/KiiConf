@@ -8,7 +8,7 @@
   * When loading a layout if the user previously made changes to, these will be
     loaded automatically (stored in local storage) and a message displayed.
 
-  * A new "revert changes" button was added to clear any user changes made to
+  * A new "reset to default" button was added to clear any user changes made to
     the layout.
 
   * Key groups now have a show/hide toggle.
@@ -19,6 +19,8 @@
 
   * OSX Compatibility fix for the build scripts
 
+  * Updated 'Wiki' Link to 'Help'
+
   [Internal]
 
   * Moved index from a PHP page to a pure HTML page
@@ -28,6 +30,8 @@
   * Utilizing Babel.js for ES6 features.
 
   * Extensive code refactoring to move to a more modular format.
+
+  * Moved all template rendering out of PHP into JS.
 
 0.3.* Saturday, June 4th, 2016
 
