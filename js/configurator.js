@@ -150,44 +150,62 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
 
         // Load the layers from the server.
         var params = this.getUrlParameters();
-        var queryString = '';
 
+        var map;
         if (params.hasOwnProperty('layout')) {
-            queryString = '?layout=' + params['layout'][0];
+            map = params['layout'][0];
         } else {
             var lastMap = window.localStorage.getItem(lastMapKey);
             if (lastMap) {
-                queryString = '?layout=' + lastMap;
+                map = lastMap;
             }
         }
 
-        $.ajax({
-            type: 'get',
-            url: SETTINGS.URI + 'renderedlayouts.php' + queryString, //TODO: send query params
-            success: (response) => {
-                $(response)//.fadeIn('slow')
-                    .appendTo('#layout-list');
+        map = _.trim(map, "' ") || 'KType-Blank';
 
-                // drop down layout select
-                var $layoutList = $('#layout-list');
-                $layoutList.on('click', function (e) {
-                    e.stopPropagation();
+        var layoutTmpl = _.template(
+`<div id="layout-list" class="pseudo-select">
+    <span id="active-layout-title"><%= x.selKbd %> <%= x.selVar %></span>
+    <ul>
+        <% _.forOwn(x.layouts, function(variants, keyboard) { %>
+            <li>
+                <a href="#" onclick="return false"><%- keyboard %></a>
+                <ul>
+                <% _.forEach(variants, function(variant) {
+                    var layout = keyboard + '-' + variant;
+                    var isSel = variant == x.selVar && keyboard == x.selKbd; %>
+                    <li data-layout="<%- layout %>" class="<%= isSel ? 'selected' : '' %>">
+                        <a href="?layout=<%= window.encodeURI(layout) %>"><%- variant %></a>
+                    </li>
+                <% }); %>
+                </ul>
+            </li>
+        <% }); %>
+    </ul>
+</div>`, { variable: 'x'});
 
-                    var $el = $(this);
-                    $el.toggleClass('show');
+        $.getJSON(SETTINGS.URI + 'layouts.php', (layouts) => {
+            var [selKbd, selVar] = map.split('-', 2);
+            var rendered = layoutTmpl({ layouts, selKbd, selVar });
 
-                    if ( $el.hasClass('show') ) {
-                        that.$document.one('click', function () {
-                            $el.removeClass('show');
-                        });
-                    }
-                });
+            $("#layout-list").replaceWith(rendered);
 
-                this.loadLayout( $layoutList.find('.selected').data('layout') );
-            },
-            error: function (response) {
-                alert('Connection error!');
-            }
+            // drop down layout select
+            var $layoutList = $('#layout-list');
+            $layoutList.on('click', function (e) {
+                e.stopPropagation();
+
+                var $el = $(this);
+                $el.toggleClass('show');
+
+                if ( $el.hasClass('show') ) {
+                    that.$document.one('click', function () {
+                        $el.removeClass('show');
+                    });
+                }
+            });
+
+            this.loadLayout($layoutList.find('.selected').data('layout'));
         });
     }
 
