@@ -134,7 +134,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         });
 
         // Revert layout button
-        var $revLayout = $("#revert-layout")
+        var $revLayout = $("#reset-layout")
             .on('click', this.revertLayout.bind(this));
 
         this.on('dirty', (_, dirty) => {
