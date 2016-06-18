@@ -13,7 +13,7 @@
     "Jeremy Bondeson <jbondeson@gmail.com>"
   ],
   "scripts": {
-    "clean": "rm -r dist/*",
+    "clean": "rm -r dist/* || true",
     "build:link": "ln -sf \"$PWD/controller\" dist/controller && ln -sf \"$PWD/tmp\" dist/tmp",
     "build:css": "lessc css/style.less dist/css/style.css",
     "build:html": "cp *.html *.php stats.json dist/",
@@ -22,7 +22,7 @@
     "build:env": "mkdir -p dist/layouts dist/cgi-bin && cp layouts/*.json dist/layouts && cp cgi-bin/*.bash dist/cgi-bin",
     "build:code": "npm run build:html && npm run build:css && npm run build:img && npm run build:js && npm run build:env",
     "build:watch": "watch 'npm run build:code' . -d --filter=dev-watch.js --wait=30 --interval=30",
-    "build": "npm run clean -s && npm run build:link && npm run build:code",
+    "build": "npm run clean -s && mkdir -p dist/ && npm run build:link && npm run build:code",
     "dev": "npm run build && npm run build:watch"
   },
   "repository": {
