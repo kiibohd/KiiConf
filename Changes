@@ -1,3 +1,13 @@
+0.5.0 TBD
+
+  [Enhancements]
+
+  [Bug Fixes]
+
+  [Internal]
+
+  * Split out update scripts so they can run independently.
+
 0.4.0 Saturday, June 18th, 2016
 
   [Enhancements]
