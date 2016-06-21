@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, document, _) {
+var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window, document, _) {
     'use strict';
 
     const lastMapKey = 'configurator-last-loaded-map';
@@ -41,7 +41,6 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         setDirty: setDirty,
         serializeKeyboardMap: serializeKeyboardMap,
         revertLayout: revertLayout,
-        getUrlParameters: getUrlParameters //TODO: Move to util module
     };
 
     Object.assign(conf, ext);
@@ -149,16 +148,13 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         this.displayLayers();
 
         // Load the layers from the server.
-        var params = this.getUrlParameters();
+        var params = utils.getUrlParameters();
 
         var map;
         if (params.hasOwnProperty('layout')) {
             map = params['layout'][0];
         } else {
-            var lastMap = window.localStorage.getItem(lastMapKey);
-            if (lastMap) {
-                map = lastMap;
-            }
+            map = utils.getLsItem(lastMapKey) || '';
         }
 
         map = _.trim(map, "' ") || 'KType-Blank';
@@ -219,10 +215,10 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
 
         var loadOrigOrPrev = layout => {
             this._unmodified = layout;
-            var prev = window.localStorage.getItem(prevEditsKey);
-            prev = prev ? JSON.parse(prev) : {};
-            if (prev[layout.header.Name] && prev[layout.header.Name][layout.header.Layout]) {
-                this.buildLayout(prev[layout.header.Name][layout.header.Layout]);
+            var prev = utils.getLsItem(prevEditsKey, true);
+            var prevLayout = _.get(prev, `${layout.header.Name}.${layout.header.Layout}`);
+            if (prevLayout) {
+                this.buildLayout(prevLayout);
                 this.setDirty(true);
                 //TODO: Replace with template.
                 //TODO: Make a cross-page module.
@@ -242,7 +238,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
 
         $.getJSON(SETTINGS.URI + 'layouts/' + file + '.json', loadOrigOrPrev);
 
-        window.localStorage.setItem(lastMapKey, file);
+        utils.updateLsItem(lastMapKey, file);
     }
 
     function buildLayout(layout) {
@@ -443,13 +439,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         this.setDirty(true);
 
         // Save a previous edit -- should be debounced.
-        var prev = window.localStorage.getItem(prevEditsKey);
-        prev = prev ? JSON.parse(prev) : {};
-
-        prev[this.header.Name] = prev[this.header.Name] || {};
-        prev[this.header.Name][this.header.Layout] = this.serializeKeyboardMap();
-        var serialized = JSON.stringify(prev);
-        window.localStorage.setItem(prevEditsKey, serialized);
+        utils.updateLsItem(prevEditsKey, this.serializeKeyboardMap(), `${this.header.Name}.${this.header.Layout}`);
     }
 
     function setDirty(dirty) {
@@ -471,17 +461,5 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
         this.buildLayout(this._unmodified);
     }
 
-    function getUrlParameters() {
-        var qd = {};
-        var params = window.location.search.substr(1).split("&");
 
-        for (var i = 0, len = params.length; i < len; i++) {
-            var s = params[i].split("=");
-            var k = s[0];
-            var v = s[1] && decodeURIComponent(s[1]);
-            (k in qd) ? qd[k].push(v) : qd[k] = [v]
-        }
-
-        return qd;
-    }
-})(DEFAULTS, SETTINGS, Key, ImportMap, window, document, _);
+})(DEFAULTS, SETTINGS, UTILS, Key, ImportMap, window, document, _);
