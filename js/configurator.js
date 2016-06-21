@@ -22,6 +22,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 
     const lastMapKey = 'configurator-last-loaded-map';
     const prevEditsKey = 'configurator-prev-edits';
+    const uiStateKey = 'configurator-ui-state';
 
     var conf = Object.create(Emitter);
     var ext =  {
@@ -61,13 +62,15 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         SETTINGS.STAGE_WIDTH = Math.floor(this.$stage.width() / SETTINGS.GRID_SIZE);
         SETTINGS.STAGE_HEIGHT = Math.floor(this.$stage.height() / SETTINGS.GRID_SIZE);
 
+        var uiState = utils.getLsItem(uiStateKey, true) || {};
+
         var groupTmpl = _.template(
 `<div id="group-<%= x.safeGroup %>" class="group">
     <div class="title">
         <span class="title-name"><%= x.group %></span>
-        <span class="toggle-vis" data-group="<%= x.safeGroup %>">[hide]</span>
+        <span class="toggle-vis" data-group="<%= x.safeGroup %>"><%= x.visible ? '[hide]' : '[show]' %></span>
     </div>
-    <ul></ul>
+    <ul class="<%= x.visible ? '' : 'hide' %>"></ul>
 </div>`, { variable: 'x' });
 
         var keyTmpl = _.template(
@@ -82,6 +85,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         $.each(DEFAULTS.keyDefaults, function (k, v) {
             if ('group' in v) {
                 v.safeGroup = v.group.replace(' ', '_');
+                v.visible = _.get(uiState, `groups.${v.safeGroup}.visible`, true);
                 if (group != v.group) {
                     $shortcutsGroup = $('#group-' + v.group);
                     $shortcutsGroup = $shortcutsGroup.length > 0
@@ -100,7 +104,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
             var group = $elem.data('group');
             var $groupList = $('#group-' + group + ' ul');
             $groupList.toggleClass('hide');
-            $elem.text($groupList.hasClass('hide') ? '[show]' : '[hide]');
+            var visible = !$groupList.hasClass('hide');
+            $elem.text(visible ? '[hide]' : '[show]');
+            utils.updateLsItem(uiStateKey, visible, `groups.${group}.visible`);
         });
 
         // import button
@@ -116,7 +122,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         $('#download-map')
             .on('click', this.downloadMap.bind(this));
 
-        // The following two functions need access to both lexical and
+        // The following functions need access to both lexical and
         // prototypal this variants.
         var that = this;
 
