@@ -458,20 +458,32 @@ nav {
 
 	.label {
 		position: absolute;
-		width: 100%;
+		width: auto;
 		z-index: 15;
 		pointer-events: none;
 		text-align: center;
 		text-shadow: 0 1px 0 #fff;
 		display: none;
 
+		// center layers
+		&.layer-0,
+		&.layer-1,
+		&.layer-2 {
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			-moz-transform: translateX(-50%);
+			-ms-transform: translateX(-50%);
+			-o-transform: translateX(-50%);
+			transform: translateX(-50%);
+		}
+
 		&.layer-0 {
 			top: 50%;
-			-webkit-transform: translateY(-50%);
-			-moz-transform: translateY(-50%);
-			-ms-transform: translateY(-50%);
-			-o-transform: translateY(-50%);
-			transform: translateY(-50%);
+			-webkit-transform: translateX(-50%) translateY(-50%);
+			-moz-transform: translateX(-50%) translateY(-50%);
+			-ms-transform: translateX(-50%) translateY(-50%);
+			-o-transform: translateX(-50%) translateY(-50%);
+			transform: translateX(-50%) translateY(-50%);
 		}
 
 		&.layer-1 {
@@ -487,26 +499,36 @@ nav {
 		&.layer-3 {
 			color: #4A8C00;
 			top: 5px;
+			left: 5px;
 		}
 
 		&.layer-4 {
 			color: #9B7F00;
 			bottom: 5px;
+			left: 5px;
 		}
 
 		&.layer-5 {
 			color: #8F3700;
 			top: 5px;
+			right: 5px;
 		}
 
 		&.layer-6 {
 			color: #900060;
 			bottom: 5px;
+			right: 5px;
 		}
 
 		&.layer-7 {
 			color: #000A97;
-			top: 5px;
+			right: 5px;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
 		}
 	}
 
