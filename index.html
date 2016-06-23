@@ -27,9 +27,9 @@
         <button type="button" id="import-map" class="button-read">import map</button>
         <input type="button" onclick="window.open('https://github.com/kiibohd/KiiConf/wiki', '_blank');" value="Help" />
         <input type="button" onclick="window.open('stats.json', '_blank');" value="Version" />
-        <div class="floatright">
+        <div class="pull-right">
             <button type="button" id="reset-layout" class="button-reset" disabled>reset to default</button>
-            <button type="button" id="download-map" class="button-write floatright">download firmware</button>
+            <button type="button" id="download-map" class="button-write pull-right">download firmware</button>
         </div>
     </nav>
 
@@ -54,13 +54,56 @@
 </div>
 
 <div id="shortcuts" class="shortcuts cf" style="display:none">
+    <div id="group-kll-headers" class="group">
+        <div class="title">
+            <span class="title-name">kll headers</span>
+            <span class="toggle-vis" data-group="kll-headers">[hide]</span>
+        </div>
+        <div class="group-data pull-left">
+            <div class="table">
+                <div class="row">
+                    <label class="cell" for="kll-header-name">Name:</label>
+                    <input type="text" id="kll-header-name" class="cell" disabled />
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-layout">Layout:</label>
+                    <input type="text" id="kll-header-layout" class="cell" disabled />
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-base">Base:</label>
+                    <input type="text" id="kll-header-base" class="cell" disabled />
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-version">Version:</label>
+                    <input type="text" id="kll-header-version" class="cell"/>
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-author">Author:</label>
+                    <input type="text" id="kll-header-author" class="cell"/>
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-kll">KLL:</label>
+                    <input type="text" id="kll-header-kll" class="cell" disabled />
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-date">Date:</label>
+                    <input type="text" id="kll-header-date" class="cell"/>
+                </div>
+                <div class="row">
+                    <label class="cell" for="kll-header-generator">Generator:</label>
+                    <input type="text" id="kll-header-generator" class="cell" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Need to move this creation with the others -->
     <div id="group-special" class="group">
         <div class="title">
             <span class="title-name">special</span>
             <span class="toggle-vis" data-group="special">[hide]</span>
         </div>
-        <ul>
+        <ul class="group-data">
             <li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
         </ul>
     </div>

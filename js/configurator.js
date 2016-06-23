@@ -68,9 +68,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 `<div id="group-<%= x.safeGroup %>" class="group">
     <div class="title">
         <span class="title-name"><%= x.group %></span>
-        <span class="toggle-vis" data-group="<%= x.safeGroup %>"><%= x.visible ? '[hide]' : '[show]' %></span>
+        <span class="toggle-vis" data-group="<%= x.safeGroup %>">[hide]</span>
     </div>
-    <ul class="<%= x.visible ? '' : 'hide' %>"></ul>
+    <ul class="group-data"></ul>
 </div>`, { variable: 'x' });
 
         var keyTmpl = _.template(
@@ -85,7 +85,6 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         $.each(DEFAULTS.keyDefaults, function (k, v) {
             if ('group' in v) {
                 v.safeGroup = v.group.replace(' ', '_');
-                v.visible = _.get(uiState, `groups.${v.safeGroup}.visible`, true);
                 if (group != v.group) {
                     $shortcutsGroup = $('#group-' + v.group);
                     $shortcutsGroup = $shortcutsGroup.length > 0
@@ -99,15 +98,23 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         });
         $shortcuts.on('click', this.shortcut.bind(this));
 
-        $('.toggle-vis').on('click', function(e) {
-            var $elem = $(this);
-            var group = $elem.data('group');
-            var $groupList = $('#group-' + group + ' ul');
-            $groupList.toggleClass('hide');
-            var visible = !$groupList.hasClass('hide');
-            $elem.text(visible ? '[hide]' : '[show]');
-            utils.updateLsItem(uiStateKey, visible, `groups.${group}.visible`);
-        });
+        $('.toggle-vis')
+            .on('click', function(e) {
+                var $elem = $(this);
+                var group = $elem.data('group');
+                var $groupList = $('#group-' + group + ' .group-data');
+                $groupList.toggleClass('hide');
+                var visible = !$groupList.hasClass('hide');
+                $elem.text(visible ? '[hide]' : '[show]');
+                utils.updateLsItem(uiStateKey, visible, `groups.${group}.visible`);
+            })
+            .each(function () {
+                var $elem = $(this);
+                var group = $elem.data('group');
+                if (!_.get(uiState, `groups.${group}.visible`, true)) {
+                    $elem.trigger("click");
+                }
+            });
 
         // import button
         $('#import-map').click(() => {
@@ -252,6 +259,16 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         this.clearLayout();
         this.header = layout.header;
 
+        // Bind the headers
+        $('#kll-header-name').val(this.header.Name);
+        $('#kll-header-layout').val(this.header.Layout);
+        $('#kll-header-base').val(this.header.Base);
+        $('#kll-header-version').val(this.header.Version);
+        $('#kll-header-author').val(this.header.Author);
+        $('#kll-header-kll').val(this.header.KLL);
+        $('#kll-header-date').val(this.header.Date);
+        $('#kll-header-generator').val(this.header.Generator);
+
         var matrix = layout.matrix;
         var minX = Infinity;
         var minY = Infinity;
@@ -391,24 +408,13 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
     }
 
     function downloadMap() {
-        var matrix = [];
-
-        $.each(this.matrix, (k, v) => {
-            matrix.push({
-                code: v.code,
-                x: v.x,
-                y: v.y,
-                w: v.width,
-                h: v.height,
-                layers: v.layers
-            });
-        });
+        var map = this.serializeKeyboardMap();
 
         $.ajax({
             type: 'post',
             url: SETTINGS.URI + 'download.php',
             data: {
-                'map': JSON.stringify({ header: this.header, matrix: matrix }),
+                'map': JSON.stringify(map),
             },
             success: function (response) {
                 if ('error' in response) {
@@ -438,7 +444,18 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
             });
         });
 
-        return { header: this.header, matrix: matrix };
+        var header = _.clone(this.header);
+        //TODO: pre-sanitize
+        header.Name = $('#kll-header-name').val();
+        header.Layout = $('#kll-header-layout').val();
+        header.Base = $('#kll-header-base').val();
+        header.Version = $('#kll-header-version').val();
+        header.Author = $('#kll-header-author').val();
+        header.KLL = $('#kll-header-kll').val();
+        header.Date = $('#kll-header-date').val();
+        header.Generator = $('#kll-header-generator').val();
+
+        return { header: header, matrix: matrix };
     }
 
     function keymapChanged() {

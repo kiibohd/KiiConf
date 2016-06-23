@@ -163,7 +163,6 @@ big {
 }
 
 .shortcuts {
-	text-align: center;
 	margin: 0 40px 40px 40px;
 	font-size: 1em;
 	text-shadow: 0 1px #fff;
@@ -202,6 +201,7 @@ big {
 	}
 
 	li {
+		text-align: center;
 		display: block;
 		float: left;
 		width: 60px;
@@ -220,6 +220,14 @@ big {
 	.toggle-vis {
 		color: #787878;
 		cursor: pointer;
+	}
+
+	.row {
+		line-height: 2.5em;
+	}
+
+	input[type="text"] {
+		width: 20em;
 	}
 }
 
@@ -531,8 +539,11 @@ nav {
 	}
 }
 
+.pull-left {
+	float: left;
+}
 
-.floatright {
+.pull-right {
 	float: right;
 }
 
@@ -619,6 +630,18 @@ nav {
 
 .hide {
 	display: none;
+}
+
+.table {
+	display: table;
+
+	.row {
+		display: table-row;
+	}
+
+	.cell {
+		display: table-cell;
+	};
 }
 
 // configurator
