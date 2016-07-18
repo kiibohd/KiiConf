@@ -237,14 +237,18 @@
         },
         {
             "code": "0x0D",
-            "x": 64,
-            "y": 9,
-            "w": 6,
+            "x": 62,
+            "y": 5,
+            "w": 8,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSLASH",
-                    "label": "\\"
+                    "key": "BACKSPACE",
+                    "label": "BKSP"
+                },
+                "1": {
+                    "key": "DELETE",
+                    "label": "DEL"
                 }
             }
         },
@@ -443,18 +447,14 @@
         },
         {
             "code": "0x1C",
-            "x": 62,
-            "y": 5,
-            "w": 8,
+            "x": 64,
+            "y": 9,
+            "w": 6,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSPACE",
-                    "label": "BKSP"
-                },
-                "1": {
-                    "key": "DELETE",
-                    "label": "DEL"
+                    "key": "BACKSLASH",
+                    "label": "\\"
                 }
             }
         },
