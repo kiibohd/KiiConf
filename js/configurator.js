@@ -330,7 +330,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 `<div class="flex-container">
     <input type="text" class="item" name="kll-define-name" value="<%- x.name %>"/>
     <input type="text" class="item" name="kll-define-value" value="<%- x.value %>"/>
-    <img class="item btn rem-define-btn" src="/img/ic_remove_circle_outline_black_24px.svg">
+    <img class="item btn rem-define-btn" src="img/ic_remove_circle_outline_black_24px.svg">
 </div>`, {variable: 'x'});
         return t;
     }
