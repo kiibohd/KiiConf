@@ -54,6 +54,8 @@ else {
 
 
 $header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$map->header, array_keys((array)$map->header)));
+$defines = implode("\n", array_map(function ($v) { return $v->name . ' = "' . $v->value . '";' . "\n"; }, (array)$map->defines));
+
 $files = array();
 $file_args = array();
 $controller_ver = ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') ? '' : json_decode(file_get_contents('http://configurator.input.club/stats.json'));
@@ -82,7 +84,11 @@ foreach ( $layers as $n => $layer ) {
 
 		return 'U"' . $k . '" : ' . $v . ';';
 	}, $layer, array_keys($layer)));
-	$out = $header . "\n\n" . $out . "\n\n";
+	if ($n == 0) {
+		$out = $header . "\n\n" . $defines . "\n\n" . $out . "\n\n";
+	} else {
+		$out = $header . "\n\n" . $out . "\n\n";
+	}
 	$hashbaby .= $out;
 
 	$files[$n] = $file = array('content' => $out, 'name' => $layout_name . '-' . $n . '.kll' );

@@ -227,6 +227,10 @@ big {
 	input[type="text"] {
 		width: 20em;
 	}
+
+	.placeholder {
+		width: 20em;
+	}
 }
 
 .button-read {
@@ -630,16 +634,30 @@ nav {
 	display: none;
 }
 
-.table {
-	display: table;
+.flex-container {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
 
-	.row {
-		display: table-row;
+	.item {
+	}
+}
+
+.stacked-containers {
+	margin-top: -5px;
+
+	.flex-container {
+		margin: 5px -5px 0 -5px;
 	}
 
-	.cell {
-		display: table-cell;
-	};
+	.item {
+		margin: 0 5px;
+	}
+}
+
+.btn {
+	cursor: pointer;
 }
 
 // configurator

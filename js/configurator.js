@@ -42,6 +42,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         setDirty: setDirty,
         serializeKeyboardMap: serializeKeyboardMap,
         revertLayout: revertLayout,
+        addNewDefine: addNewDefine,
     };
 
     Object.assign(conf, ext);
@@ -51,6 +52,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
     // TODO: Break this up...
     function init() {
         this.header = {};
+        this.defines = {};
         this.matrix = [];
 
         this._selectedLayer = 0;
@@ -59,41 +61,29 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         this.$stage = $('#stage');
         this.$document = $(document);
 
+        this.templates = buildTemplates();
+
         SETTINGS.STAGE_WIDTH = Math.floor(this.$stage.width() / SETTINGS.GRID_SIZE);
         SETTINGS.STAGE_HEIGHT = Math.floor(this.$stage.height() / SETTINGS.GRID_SIZE);
 
         var uiState = utils.getLsItem(uiStateKey, true) || {};
 
-        var groupTmpl = _.template(
-`<div id="group-<%= x.safeGroup %>" class="group">
-    <div class="title">
-        <span class="title-name"><%= x.group %></span>
-        <span class="toggle-vis" data-group="<%= x.safeGroup %>">[hide]</span>
-    </div>
-    <ul class="group-data"></ul>
-</div>`, { variable: 'x' });
-
-        var keyTmpl = _.template(
-`<li>
-    <span class="shortcut-button" data-key="<%- x.key %>"><%= x.value.label || x.key %></span>
-</li>`, {variable: 'x'});
-
         // create shortcuts
         var $shortcuts = $('#shortcuts');
         var $shortcutsGroup;
         var group = '';
-        $.each(DEFAULTS.keyDefaults, function (k, v) {
+        $.each(DEFAULTS.keyDefaults, (k, v) => {
             if ('group' in v) {
                 v.safeGroup = v.group.replace(' ', '_');
                 if (group != v.group) {
                     $shortcutsGroup = $('#group-' + v.group);
                     $shortcutsGroup = $shortcutsGroup.length > 0
                         ? $shortcutsGroup
-                        : $(groupTmpl(v)).appendTo($shortcuts);
+                        : $(this.templates.group(v)).appendTo($shortcuts);
                     group = v.group;
                 }
 
-                $shortcutsGroup.children('ul').append(keyTmpl({key: k, value: v}));
+                $shortcutsGroup.children('ul').append(this.templates.key({key: k, value: v}));
             }
         });
         $shortcuts.on('click', this.shortcut.bind(this));
@@ -128,6 +118,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         // download button
         $('#download-map')
             .on('click', this.downloadMap.bind(this));
+
+        $('#add-define-btn')
+            .on('click', () => this.addNewDefine('', ''));
 
         // The following functions need access to both lexical and
         // prototypal this variants.
@@ -172,30 +165,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 
         map = _.trim(map, "' ") || 'KType-Blank';
 
-        var layoutTmpl = _.template(
-`<div id="layout-list" class="pseudo-select">
-    <span id="active-layout-title"><%= x.selKbd %> <%= x.selVar %></span>
-    <ul>
-        <% _.forOwn(x.layouts, function(variants, keyboard) { %>
-            <li>
-                <a href="#" onclick="return false"><%- keyboard %></a>
-                <ul>
-                <% _.forEach(variants, function(variant) {
-                    var layout = keyboard + '-' + variant;
-                    var isSel = variant == x.selVar && keyboard == x.selKbd; %>
-                    <li data-layout="<%- layout %>" class="<%= isSel ? 'selected' : '' %>">
-                        <a href="?layout=<%= window.encodeURI(layout) %>"><%- variant %></a>
-                    </li>
-                <% }); %>
-                </ul>
-            </li>
-        <% }); %>
-    </ul>
-</div>`, { variable: 'x'});
-
         $.getJSON(SETTINGS.URI + 'layouts.php', (layouts) => {
             var [selKbd, selVar] = map.split('-', 2);
-            var rendered = layoutTmpl({ layouts, selKbd, selVar });
+            var rendered = this.templates.layout({ layouts, selKbd, selVar });
 
             $("#layout-list").replaceWith(rendered);
 
@@ -258,6 +230,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         this.setDirty(false);
         this.clearLayout();
         this.header = layout.header;
+        this.defines = layout.defines || [];
 
         // Bind the headers
         $('#kll-header-name').val(this.header.Name);
@@ -268,6 +241,10 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         $('#kll-header-kll').val(this.header.KLL);
         $('#kll-header-date').val(this.header.Date);
         $('#kll-header-generator').val(this.header.Generator);
+
+        _.forEach(this.defines, (v) => {
+            this.addNewDefine(v.name, v.value);
+        });
 
         var matrix = layout.matrix;
         var minX = Infinity;
@@ -309,6 +286,53 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         });
 
         $('#shortcuts').show();
+    }
+
+    function buildTemplates() {
+        var t = {};
+        // Group template.
+        t.group = _.template(
+`<div id="group-<%= x.safeGroup %>" class="group">
+    <div class="title">
+        <span class="title-name"><%= x.group %></span>
+        <span class="toggle-vis" data-group="<%= x.safeGroup %>">[hide]</span>
+    </div>
+    <ul class="group-data"></ul>
+</div>`, { variable: 'x' });
+
+        t.layout = _.template(
+`<div id="layout-list" class="pseudo-select">
+    <span id="active-layout-title"><%= x.selKbd %> <%= x.selVar %></span>
+    <ul>
+        <% _.forOwn(x.layouts, function(variants, keyboard) { %>
+            <li>
+                <a href="#" onclick="return false"><%- keyboard %></a>
+                <ul>
+                <% _.forEach(variants, function(variant) {
+                    var layout = keyboard + '-' + variant;
+                    var isSel = variant == x.selVar && keyboard == x.selKbd; %>
+                    <li data-layout="<%- layout %>" class="<%= isSel ? 'selected' : '' %>">
+                        <a href="?layout=<%= window.encodeURI(layout) %>"><%- variant %></a>
+                    </li>
+                <% }); %>
+                </ul>
+            </li>
+        <% }); %>
+    </ul>
+</div>`, { variable: 'x'});
+
+        t.key = _.template(
+`<li>
+    <span class="shortcut-button" data-key="<%- x.key %>"><%= x.value.label || x.key %></span>
+</li>`, {variable: 'x'});
+
+        t.define = _.template(
+`<div class="flex-container">
+    <input type="text" class="item" name="kll-define-name" value="<%- x.name %>"/>
+    <input type="text" class="item" name="kll-define-value" value="<%- x.value %>"/>
+    <img class="item btn rem-define-btn" src="/img/ic_remove_circle_outline_black_24px.svg">
+</div>`, {variable: 'x'});
+        return t;
     }
 
     function selectKey(key) {
@@ -400,6 +424,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 
     function clearLayout() {
         this.header = {};
+        this.defines = [];
         this.matrix = [];
 
         // following jQuery documentation all event listeners are automatically removed so this is all we need to clear the board
@@ -455,7 +480,21 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         header.Date = $('#kll-header-date').val();
         header.Generator = $('#kll-header-generator').val();
 
-        return { header: header, matrix: matrix };
+        var defines = [];
+
+        $('#kll-define-list')
+            .children('.flex-container:has(input)')
+            .each(function () {
+                var value = $(this).children('input[name="kll-define-value"]').val();
+                var name = $(this).children('input[name="kll-define-name"]').val();
+                defines.push({name, value});
+            });
+
+        return {
+            header: header,
+            defines: defines,
+            matrix: matrix
+        };
     }
 
     function keymapChanged() {
@@ -484,5 +523,21 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         this.buildLayout(this._unmodified);
     }
 
+    function addNewDefine(name, value) {
+        name = name || '';
+        value = value || '';
 
+        var $newDef = $(this.templates.define({name: name, value: value}))
+            .appendTo('#kll-define-list');
+
+        $newDef.children('.rem-define-btn')
+            .on('click', function (){
+                var $btn = $(this);
+                $btn.off('click');
+                $btn.parent('.flex-container').remove();
+            });
+
+        $newDef.children('input')
+            .on('focus', () => this.deselectKeys());
+    }
 })(DEFAULTS, SETTINGS, UTILS, Key, ImportMap, window, document, _);

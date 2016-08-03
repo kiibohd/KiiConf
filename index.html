@@ -60,38 +60,54 @@
             <span class="toggle-vis" data-group="kll-headers">[hide]</span>
         </div>
         <div class="group-data pull-left">
-            <div class="table">
-                <div class="row">
-                    <label class="cell" for="kll-header-name">Name:</label>
-                    <input type="text" id="kll-header-name" class="cell" disabled />
+            <div class="stacked-containers">
+                <div class="flex-container">
+                    <label class="item" for="kll-header-name">Name:</label>
+                    <input type="text" id="kll-header-name" class="item" disabled />
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-layout">Layout:</label>
-                    <input type="text" id="kll-header-layout" class="cell" disabled />
+                <div class="flex-container">
+                    <label class="item" for="kll-header-layout">Layout:</label>
+                    <input type="text" id="kll-header-layout" class="item" disabled />
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-base">Base:</label>
-                    <input type="text" id="kll-header-base" class="cell" disabled />
+                <div class="flex-container">
+                    <label class="item" for="kll-header-base">Base:</label>
+                    <input type="text" id="kll-header-base" class="item" disabled />
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-version">Version:</label>
-                    <input type="text" id="kll-header-version" class="cell"/>
+                <div class="flex-container">
+                    <label class="item" for="kll-header-version">Version:</label>
+                    <input type="text" id="kll-header-version" class="item"/>
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-author">Author:</label>
-                    <input type="text" id="kll-header-author" class="cell"/>
+                <div class="flex-container">
+                    <label class="item" for="kll-header-author">Author:</label>
+                    <input type="text" id="kll-header-author" class="item"/>
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-kll">KLL:</label>
-                    <input type="text" id="kll-header-kll" class="cell" disabled />
+                <div class="flex-container">
+                    <label class="item" for="kll-header-kll">KLL:</label>
+                    <input type="text" id="kll-header-kll" class="item" disabled />
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-date">Date:</label>
-                    <input type="text" id="kll-header-date" class="cell"/>
+                <div class="flex-container">
+                    <label class="item" for="kll-header-date">Date:</label>
+                    <input type="text" id="kll-header-date" class="item"/>
                 </div>
-                <div class="row">
-                    <label class="cell" for="kll-header-generator">Generator:</label>
-                    <input type="text" id="kll-header-generator" class="cell" disabled />
+                <div class="flex-container">
+                    <label class="item" for="kll-header-generator">Generator:</label>
+                    <input type="text" id="kll-header-generator" class="item" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="group-kll-defines" class="group">
+        <div class="title">
+            <span class="title-name">kll defines</span>
+            <span class="toggle-vis" data-group="kll-defines">[hide]</span>
+        </div>
+        <div class="group-data pull-left">
+            <div class="stacked-containers" id="kll-define-list">
+                <div class="flex-container">
+                    <div class="item placeholder">Name</div>
+                    <div class="item placeholder">Value</div>
+                    <img class="item btn" id="add-define-btn" src="/img/ic_add_circle_outline_black_24px.svg">
                 </div>
             </div>
         </div>
