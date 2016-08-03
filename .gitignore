@@ -5,3 +5,4 @@ stats.json
 controller/*
 dist/*
 node_modules/*
+.vscode/*
