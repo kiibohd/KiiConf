@@ -163,7 +163,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
             map = utils.getLsItem(lastMapKey) || '';
         }
 
-        map = _.trim(map, "' ") || 'KType-Blank';
+        map = _.trim(map, "' ") || 'WhiteFox-TrueFoxBlank';
 
         $.getJSON(SETTINGS.URI + 'layouts.php', (layouts) => {
             var [selKbd, selVar] = map.split('-', 2);
