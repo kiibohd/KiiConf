@@ -161,7 +161,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, Key, ImportMap, window, docume
             }
         }
 
-        map = _.trim(map, "' ") || 'KType-Blank';
+        map = _.trim(map, "' ") || 'WhiteFox-TrueFoxBlank';
 
         var layoutTmpl = _.template(
 `<div id="layout-list" class="pseudo-select">
