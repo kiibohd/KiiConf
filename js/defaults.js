@@ -557,6 +557,32 @@ var DEFAULTS = (function (def) {
             '#:flashMode()': {y: 28, x: 0, w: 4, h: 4, label: 'FLASH', group: 'special'},
             '#:toggleKbdProtocol()': {y: 28, x: 0, w: 4, h: 4, label: '6/N-KRO', group: 'special'},
 
+            // Mouse Actions
+            '#:mouseOut( 1, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 1', group: 'mouse'},
+            '#:mouseOut( 2, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 2', group: 'mouse'},
+            '#:mouseOut( 3, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 3', group: 'mouse'},
+            '#:mouseOut( 4, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 4', group: 'mouse'},
+            '#:mouseOut( 5, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 5', group: 'mouse'},
+            '#:mouseOut( 6, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 6', group: 'mouse'},
+            '#:mouseOut( 7, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 7', group: 'mouse'},
+            '#:mouseOut( 8, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 8', group: 'mouse'},
+            '#:mouseOut( 9, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 9', group: 'mouse'},
+            '#:mouseOut( 10, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 10', group: 'mouse'},
+            '#:mouseOut( 11, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 11', group: 'mouse'},
+            '#:mouseOut( 12, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 12', group: 'mouse'},
+            '#:mouseOut( 13, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 13', group: 'mouse'},
+            '#:mouseOut( 14, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 14', group: 'mouse'},
+            '#:mouseOut( 15, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 15', group: 'mouse'},
+            '#:mouseOut( 16, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'Btn 16', group: 'mouse'},
+            '#:mouseOut( 0, 0, 1 )': {y: 28, x: 0, w: 4, h: 4, label: '↑ x1', group: 'mouse'},
+            '#:mouseOut( 0, 0, -1 )': {y: 28, x: 0, w: 4, h: 4, label: '↓ x1', group: 'mouse'},
+            '#:mouseOut( 0, -1, 0 )': {y: 28, x: 0, w: 4, h: 4, label: '← x1', group: 'mouse'},
+            '#:mouseOut( 0, 1, 0 )': {y: 28, x: 0, w: 4, h: 4, label: '→ x1', group: 'mouse'},
+            '#:mouseOut( 0, 0, 5 )': {y: 28, x: 0, w: 4, h: 4, label: '↑ x5', group: 'mouse'},
+            '#:mouseOut( 0, 0, -5 )': {y: 28, x: 0, w: 4, h: 4, label: '↓ x5', group: 'mouse'},
+            '#:mouseOut( 0, -5, 0 )': {y: 28, x: 0, w: 4, h: 4, label: '← x5', group: 'mouse'},
+            '#:mouseOut( 0, 5, 0 )': {y: 28, x: 0, w: 4, h: 4, label: '→ x5', group: 'mouse'},
+
             // No longer used, symbolic names are more useful
             /*
              '#:layerLock( 1 )': { label: 'LOCK-1', group: 'special' },
