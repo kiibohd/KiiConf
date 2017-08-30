@@ -84,11 +84,17 @@ foreach ( $layers as $n => $layer ) {
 
 		return 'U"' . $k . '" : ' . $v . ';';
 	}, $layer, array_keys($layer)));
-	if ($n == 0) {
-		$out = $header . "\n\n" . $defines . "\n\n" . $out . "\n\n";
-	} else {
-		$out = $header . "\n\n" . $out . "\n\n";
-	}
+
+    $custom = "";
+    if (isset($map->custom) && isset($map->custom->$n)) {
+        $custom = "\n\n" . $map->custom->$n;
+    }
+
+    if ($n == 0) {
+        $out = $header . "\n\n" . $defines . "\n\n" . $out . $custom . "\n\n";
+    } else {
+        $out = $header . "\n\n" . $out . $custom . "\n\n";
+    }
 	$hashbaby .= $out;
 
 	$files[$n] = $file = array('content' => $out, 'name' => $layout_name . '-' . $n . '.kll' );
