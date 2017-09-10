@@ -496,7 +496,7 @@
                     "label": "VOL-"
                 },
                 "2": {
-                    "key": "#:ledControl( 3, 15, 0 )",
+                    "key": "#:ledControl( 0, 15 )",
                     "label": "LED-"
                 }
             }
@@ -517,7 +517,7 @@
                     "label": "VOL+"
                 },
                 "2": {
-                    "key": "#:ledControl( 4, 15, 0 )",
+                    "key": "#:ledControl( 1, 15 )",
                     "label": "LED+"
                 }
             }
@@ -538,7 +538,7 @@
                     "label": "MUTE"
                 },
                 "2": {
-                    "key": "#:ledControl( 5, 0, 0 )",
+                    "key": "#:ledControl( 3, 0 )",
                     "label": "LED OFF"
                 }
             }

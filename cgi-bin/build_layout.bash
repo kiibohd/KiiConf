@@ -33,6 +33,7 @@ layer() {
 
 BUILD_PATH="./tmp/${1}"; shift
 SOURCE_PATH=$(realpath controller)
+REAL_BUILD_PATH=$(realpath ${BUILD_PATH})
 
 # Get Scan Module
 SCAN_MODULE="${1}"; shift
@@ -40,142 +41,66 @@ SCAN_MODULE="${1}"; shift
 # Create build directory if necessary
 mkdir -p "${BUILD_PATH}"
 
-ERGODOX_DEFAULT_MAP="$(layer ${1}) lcdFuncMap"
-DEFAULT_MAP="$(layer ${1}) stdFuncMap"; shift # Assign the default map
-
-# Make sure a there are layers to assign
-PARTIAL_MAPS=""
-ERGODOX_PARTIAL_MAPS=""
-if test $# -gt 0; then
-	# Assign the parital map paramters
-	# Each layer is separated by a ;
-	ERGODOX_PARTIAL_MAPS="$(layer ${1}) lcdFuncMap"
-	PARTIAL_MAPS="$(layer ${1}) stdFuncMap"; shift
-	while test $# -gt 0; do
-		ERGODOX_PARTIAL_MAPS="${ERGODOX_PARTIAL_MAPS};$(layer ${1}) lcdFuncMap"
-		PARTIAL_MAPS="${PARTIAL_MAPS};$(layer ${1}) stdFuncMap"; shift
-	done
-fi
-
-# Start CMake generation
-cd "${BUILD_PATH}"
-
-# General build
-default_build() {
-	# Show commands
-	set -x
-
-	# NOTE: To add different layers -> -DPartialMaps="layer1 layer1a;layer2 layer2a;layer3"
-	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="${DEFAULT_MAP}" -DPartialMaps="${PARTIAL_MAPS}" -DCONFIGURATOR=1
-	#cmake ${SOURCE_PATH} -DScanModule="MD1" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="${DEFAULT_MAP}" -DPartialMaps="${PARTIAL_MAPS}"
-	# Example working cmake command
-	#cmake ${SOURCE_PATH} -DScanModule="MD1" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DBaseMap="defaultMap" -DDefaultMap="md1Overlay stdFuncMap" -DPartialMaps="hhkbpro2"
-
-	# Build Firmware
-	make -j
-	RETVAL=$?
-
-	# Stop showing commands
-	set +x
-
-	# If the build failed, make clean, then build again
-	# Build log will be easier to read
-	if [ $RETVAL -ne 0 ]; then
-		make clean
-		make
-		RETVAL=$?
-
-		# If the build still failed, make sure to remove any old .dfu.bin files
-		if [ $RETVAL -ne 0 ]; then
-			rm -f *.dfu.bin
-		fi
-	fi
-
-	exit $RETVAL
-}
-
-# TODO Get this to work with a general build
-# Ergodox 2 half build
-ergodox_build() {
-	SIDE=${1}
-
-	pwd
-	# Show commands
-	set -x
-
-	# Directory for this side
-	mkdir -p $SIDE
-	cd $SIDE
-
-	# Copy all the needed .kll files here
-	cp ../*.kll .
-
-	# NOTE: To add different layers -> -DPartialMaps="layer1 layer1a;layer2 layer2a;layer3"
-	cmake ${SOURCE_PATH} -DScanModule="$SCAN_MODULE" -DCHIP="${CHIP}" -DBaseMap="${!SIDE}" -DMacroModule="PartialMap" -DOutputModule="pjrcUSB" -DDebugModule="full" -DDefaultMap="${ERGODOX_DEFAULT_MAP}" -DPartialMaps="${ERGODOX_PARTIAL_MAPS}" -DCONFIGURATOR=1
-
-	# Build Firmware
-	make -j
-	RETVAL=$?
-
-	# Stop showing commands
-	set +x
-
-	# If the build failed, make clean, then build again
-	# Build log will be easier to read
-	if [ $RETVAL -ne 0 ]; then
-		make clean
-		make
-		RETVAL=$?
-
-		# If the build still failed, make sure to remove any old .dfu.bin files
-		if [ $RETVAL -ne 0 ]; then
-			rm -f *.dfu.bin
-		fi
-	fi
-
-	# Go back to the previous directory
-	cd ..
-}
+ExtraMap="stdFuncMap"
+BuildScript=""
 
 case "$SCAN_MODULE" in
-# Ergodox
-"MDErgo1")
-	CHIP="mk20dx256vlh7"
-	left="defaultMap leftHand slave1 rightHand"
-	right="defaultMap rightHand slave1 leftHand"
-
-	# Run left side in the background
-	ergodox_build left &
-	ergodox_build right
-
-	# Symlink all the needed files to this directory
-	pwd
-	ln -s  left/kiibohd.dfu.bin  left_kiibohd.dfu.bin
-	ln -s right/kiibohd.dfu.bin right_kiibohd.dfu.bin
-
-	ln -s  left/generatedKeymap.h  left_generatedKeymap.h
-	ln -s right/generatedKeymap.h right_generatedKeymap.h
-
-	ln -s  left/kll_defs.h  left_kll_defs.h
-	ln -s right/kll_defs.h right_kll_defs.h
-
-	exit $RETVAL
+"MD1")      # Infinity
+	BuildScript="infinity.bash"
 	;;
-
-# WhiteFox
-"WhiteFox")
-	CHIP="mk20dx256vlh7"
-	default_build
+"MD1.1")    # Infinity LED
+	BuildScript="infinity_led.bash"
 	;;
-
-# General
+"MDErgo1")  # Ergodox
+	BuildScript="ergodox.bash"
+	ExtraMap="lcdFuncMap"
+	;;
+"WhiteFox") # WhiteFox
+	BuildScript="whitefox.bash"
+	;;
+"KType")    # K-Type
+	BuildScript="k-type.bash"
+	ExtraMap="stdFuncMap animation_test"
+	;;
 *)
-	CHIP="mk20dx128vlf5"
-	default_build
+	echo "ERROR: Unknown keyboard type"
+	exit 1
 	;;
 esac
 
-echo "ERROR: Should not get here..."
-exit 1
+# Assign the default map
+DEFAULT_MAP="${ExtraMap} $(layer ${1})";
+shift
 
+# Make sure a there are layers to assign
+PARTIAL_MAPS="${ExtraMap} $(layer ${1})"
+shift
+while (( "$#" >= "1" )); do
+	PARTIAL_MAPS="${PARTIAL_MAPS};${ExtraMap} $(layer ${1})"
+	# PARTIAL_MAPS+=("${ExtraMap} $(layer ${1})")
+	shift
+done
 
+# Show commands
+set -x
+
+# Use this line if you want to enable debug logging.
+#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+
+DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+
+RETVAL=$?
+
+# Stop showing commands
+set +x
+
+# If the build failed, make clean, then build again
+# Build log will be easier to read
+if (($RETVAL != 0)); then
+	# If the build still failed, make sure to remove any old .dfu.bin files
+	if [ $RETVAL -ne 0 ]; then
+		rm -f "${BUILD_PATH}/*.dfu.bin"
+	fi
+fi
+
+exit $RETVAL

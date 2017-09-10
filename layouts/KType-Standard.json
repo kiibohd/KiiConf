@@ -1,8 +1,8 @@
 {
     "header": {
         "Name": "KType",
-        "Layout": "Blank",
-        "Base": "Blank",
+        "Layout": "Standard",
+        "Base": "Standard",
         "Version": "0.1",
         "Author": "HaaTa (Jacob Alexander) 2015",
         "KLL": "0.3c",
@@ -1141,5 +1141,8 @@
                 }
             }
         }
-    ]
+    ],
+    "custom": {
+        "0": "A[rainbow_wave] <= pfunc:interp;\nA[rainbow_wave, 1] <= P[c:0%](40,212,212), P[c:100%](40,212,212);"
+    }
 }
