@@ -84,10 +84,31 @@ done
 # Show commands
 set -x
 
-# Use this line if you want to enable debug logging.
-#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+if ["${SCAN_MODULE}" != "MDErgo1"]; then
+	# Use this line if you want to enable debug logging.
+	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
-DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+else
+	LBuildPath="${REAL_BUILD_PATH}/left"
+	RBuildPath="${REAL_BUILD_PATH}}/right"
+
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
+
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
+
+	ln -s "${LBuildPath}/kiibohd.dfu.bin" "${REAL_BUILD_PATH}/left_kiibohd.dfu.bin"
+	ln -s "${LBuildPath}/kiibohd.secure.dfu.bin" "${REAL_BUILD_PATH}/left_kiibohd.secure.dfu.bin"
+	ln -s "${LBuildPath}/kll.json" "${REAL_BUILD_PATH}/left_kll.json"
+	ln -s "${LBuildPath}/log/generatedKeymap.h" "${REAL_BUILD_PATH}/left_generatedKeymap.h"
+	ln -s "${LBuildPath}/log/kll_defs.h" "${REAL_BUILD_PATH}/left_kll_defs.h"
+
+	ln -s "${RBuildPath}/kiibohd.dfu.bin" "${REAL_BUILD_PATH}/right_kiibohd.dfu.bin"
+	ln -s "${RBuildPath}/kiibohd.secure.dfu.bin" "${REAL_BUILD_PATH}/right_kiibohd.secure.dfu.bin"
+	ln -s "${RBuildPath}/kll.json" "${REAL_BUILD_PATH}/right_kll.json"
+	ln -s "${RBuildPath}/log/generatedKeymap.h" "${REAL_BUILD_PATH}/right_generatedKeymap.h"
+	ln -s "${RBuildPath}/log/kll_defs.h" "${REAL_BUILD_PATH}/right_kll_defs.h"
+fi
 
 RETVAL=$?
 
