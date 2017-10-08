@@ -1110,8 +1110,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LEFT",
-                    "label": "\u2190"
+                    "key": "LEFT", "label": "\u2190"
                 }
             }
         },
@@ -1143,6 +1142,20 @@
         }
     ],
     "custom": {
-        "0": "A[rainbow_wave] <= pfunc:interp;\nA[rainbow_wave, 1] <= P[c:0%](40,212,212), P[c:100%](40,212,212);"
+
+    },
+    "animations": {
+        "rainbow_wave": {
+            "settings": "pfunc:interp",
+            "frames": [
+                "P[c:0%](40,212,212), P[c:100%](40,212,212)"
+            ]
+        },
+        "lock_event": {
+            "settings": "loops:1, replace:all, framedelay:3, framestretch, replace:basic",
+            "frames": [
+               "P[r:i,c:i](+:100,+:100,+:100)"
+            ]
+        }
     }
 }
