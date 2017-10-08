@@ -23,7 +23,8 @@
     "build:code": "npm run build:html && npm run build:css && npm run build:img && npm run build:js && npm run build:env",
     "build:watch": "watch 'npm run build:code' . -d --filter=dev-watch.js --wait=30 --interval=30",
     "build": "npm run clean -s && mkdir -p dist/ && npm run build:link && npm run build:code",
-    "dev": "npm run build && npm run build:watch"
+    "dev": "npm run build && npm run build:watch",
+    "start": "foreman start"
   },
   "repository": {
     "type": "git",

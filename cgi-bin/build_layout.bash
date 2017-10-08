@@ -53,7 +53,7 @@ case "$SCAN_MODULE" in
 	;;
 "MDErgo1")  # Ergodox
 	BuildScript="ergodox.bash"
-	ExtraMap="lcdFuncMap"
+	ExtraMap="infinity_ergodox/lcdFuncMap"
 	;;
 "WhiteFox") # WhiteFox
 	BuildScript="whitefox.bash"
@@ -81,17 +81,21 @@ while (( "$#" >= "1" )); do
 	shift
 done
 
-# Show commands
-set -x
 
-if ["${SCAN_MODULE}" != "MDErgo1"]; then
+if [ "${SCAN_MODULE}" != "MDErgo1" ]; then
+	# Show commands
+	set -x
+
 	# Use this line if you want to enable debug logging.
 	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
 	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 else
 	LBuildPath="${REAL_BUILD_PATH}/left"
-	RBuildPath="${REAL_BUILD_PATH}}/right"
+	RBuildPath="${REAL_BUILD_PATH}/right"
+
+	# Show commands
+	set -x
 
 	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
 

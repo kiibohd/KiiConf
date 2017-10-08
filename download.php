@@ -1,13 +1,25 @@
 <?php
 header('Content-Type: application/json');
 
-$map_orig = !empty( $_POST['map'] ) ? $_POST['map'] : '';
-
-if ( !$map_orig ) {
-	die( json_encode( array( 'error' => 'Malformed request' ) ) );
+//Make sure that it is a POST request.
+if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+    throw new Exception('Request method must be POST!');
 }
 
-$map = json_decode( $map_orig );
+//Make sure that the content type of the POST request has been set to application/json
+$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+if(strcasecmp($contentType, 'application/json') != 0){
+    throw new Exception('Content type must be: application/json');
+}
+
+#$map_orig = !empty( $_POST['map'] ) ? $_POST['map'] : '';
+$map_orig = file_get_contents("php://input");
+
+$map = @json_decode( $map_orig );
+
+if ($map === null && json_last_error() !== JSON_ERROR_NONE) {
+	throw new Exception('Invalid JSON, unable to parse.');
+}
 
 $name = !empty( $map->header->Name ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $map->header->Name)) : '';
 $layout = !empty( $map->header->Layout ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $map->header->Layout)) : '';
@@ -65,6 +77,20 @@ if ( $controller_ver !== '' ) {
 $hashbaby = $name . $layout . $controller_ver; // Set name of base, layout and controller version here as an md5 seed
 $layout_name = $name . '-' . $layout;
 
+$animations = '';
+if ( isset($map->animations) ) {
+	$animations = implode("\n", array_map(function($v, $k) {
+		$s = 'A[' . $k . '] <= ' . $v->settings . ";\n";
+
+		$i = 1;
+		foreach ($v->frames as $frame) {
+			$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . ";\n";
+			$i++;
+		}
+
+		return $s;
+	}, (array)$map->animations, array_keys((array)$map->animations)));
+}
 
 // Generate .kll files
 $max_layer = 0;
@@ -88,12 +114,12 @@ foreach ( $layers as $n => $layer ) {
     $custom = "";
     if (isset($map->custom) && isset($map->custom->$n)) {
         $custom = "\n\n" . $map->custom->$n;
-    }
+	}
 
     if ($n == 0) {
-        $out = $header . "\n\n" . $defines . "\n\n" . $out . $custom . "\n\n";
+        $out = $header . "\n\n" . $defines . "\n\n" . $out . $custom . "\n\n" . $animations . "\n\n";
     } else {
-        $out = $header . "\n\n" . $out . $custom . "\n\n";
+        $out = $header . "\n\n" . $out . $custom . "\n\n" . $animations . "\n\n";
     }
 	$hashbaby .= $out;
 
