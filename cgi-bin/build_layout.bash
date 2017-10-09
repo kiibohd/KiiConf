@@ -60,7 +60,6 @@ case "$SCAN_MODULE" in
 	;;
 "KType")    # K-Type
 	BuildScript="k-type.bash"
-	ExtraMap="stdFuncMap animation_test"
 	;;
 *)
 	echo "ERROR: Unknown keyboard type"

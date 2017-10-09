@@ -65,7 +65,6 @@ try {
 		}
 	}
 
-
 	$header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$map->header, array_keys((array)$map->header)));
 	$defines = implode("\n", array_map(function ($v) { return $v->name . ' = "' . $v->value . '";' . "\n"; }, (array)$map->defines));
 
@@ -85,7 +84,7 @@ try {
 
 			$i = 1;
 			foreach ($v->frames as $frame) {
-				$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . ";\n";
+				$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . "\n";
 				$i++;
 			}
 
@@ -120,7 +119,7 @@ try {
 		if ($n == 0) {
 			$out = $header . "\n\n" . $defines . "\n\n" . $out . $custom . "\n\n" . $animations . "\n\n";
 		} else {
-			$out = $header . "\n\n" . $out . $custom . "\n\n" . $animations . "\n\n";
+			$out = $header . "\n\n" . $out . $custom . "\n\n";
 		}
 		$hashbaby .= $out;
 
