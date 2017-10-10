@@ -84,8 +84,13 @@ try {
 
 			$i = 1;
 			foreach ($v->frames as $frame) {
-				$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . "\n";
-				$i++;
+				if (substr($frame, 0, 1) === "#") {
+					// Output comment lines raw.
+					$s = $s . $frame . "\n";
+				} else {
+					$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . "\n";
+					$i++;
+				}
 			}
 
 			return $s;
