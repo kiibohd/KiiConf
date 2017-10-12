@@ -13,7 +13,6 @@ try {
 		throw new Exception('Content type must be: application/json');
 	}
 
-	#$map_orig = !empty( $_POST['map'] ) ? $_POST['map'] : '';
 	$map_orig = file_get_contents("php://input");
 
 	$map = @json_decode( $map_orig );
@@ -35,6 +34,7 @@ try {
 	$default = $default->matrix;
 
 	$layers = array();
+	$triggers = array();
 
 	// Find the differences between the default map and the user's map
 	if ($name == 'WhiteFox') {
@@ -54,13 +54,28 @@ try {
 				foreach ( $key->layers as $l => $layer ) {
 					$layers[$l][$default[$idxInDef]->layers->{0}->key] = $layer->key;
 				}
+				
+				// Process "trigger" entries
+				if (isset($key->triggers)) {
+					foreach ($key->triggers as $t => $trigger) {
+						$triggers[$t][$default[$idxInDef]->layers->{0}->key] = $trigger;
+					}	
+				}
 			}
 		}
 	}
 	else {
 		foreach ( $map->matrix as $i => $key ) {
+			// Process "layer" entries
 			foreach ( $key->layers as $l => $layer ) {
 				$layers[$l][$default[$i]->layers->{0}->key] = $layer->key;
+			}
+
+			// Process "trigger" entries
+			if (isset($key->triggers)) {
+				foreach ($key->triggers as $t => $trigger) {
+					$triggers[$t][$default[$i]->layers->{0}->key] = $trigger;
+				}	
 			}
 		}
 	}
@@ -114,7 +129,24 @@ try {
 			}
 
 			return 'U"' . $k . '" : ' . $v . ';';
+
 		}, $layer, array_keys($layer)));
+
+		$triggersOut = "";
+		if (isset($triggers[$n])) {
+			$triggersOut = implode("\n", array_map(function($v, $k) {
+				$s = "";
+				
+				foreach ($v as $t) {
+					if ($s !== "") {
+						$s = $s . "\n";
+					}
+					$s = $s . 'U"' .$k . '" :+ ' . $t->action . ';';
+				}
+
+				return  $s;
+			}, $triggers[$n], array_keys($triggers[$n])));
+		}
 
 		$custom = "";
 		if (isset($map->custom) && isset($map->custom->$n)) {
@@ -122,9 +154,9 @@ try {
 		}
 
 		if ($n == 0) {
-			$out = $header . "\n\n" . $defines . "\n\n" . $out . $custom . "\n\n" . $animations . "\n\n";
+			$out = $header . "\n\n" . $defines . "\n\n" . $out . "\n\n" . $triggersOut . $custom . "\n\n" . $animations . "\n\n";
 		} else {
-			$out = $header . "\n\n" . $out . $custom . "\n\n";
+			$out = $header . "\n\n" . $out . "\n\n" . $triggersOut . $custom . "\n\n";
 		}
 		$hashbaby .= $out;
 
@@ -235,4 +267,8 @@ function delTree ($dir) {
 		(is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
 	}
 	return rmdir($dir);
+}
+
+function logObject($x) {
+	error_log(print_r($x, true));
 }

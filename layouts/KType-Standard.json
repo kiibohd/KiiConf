@@ -21,6 +21,15 @@
                     "key": "ESC",
                     "label": "ESC"
                 }
+            },
+            "triggers": {
+                "0": [
+                    {
+                        "type": "animation",
+                        "action": "A[rainbow_wave](start)",
+                        "label": "start 'rainbow_wave' animation"
+                    }
+                ]
             }
         },
         {
