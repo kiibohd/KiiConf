@@ -89,42 +89,57 @@ if [ "${SCAN_MODULE}" != "MDErgo1" ]; then
 	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
 	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+
+	RETVAL=$?
 else
 	LBuildPath="${REAL_BUILD_PATH}/left"
 	RBuildPath="${REAL_BUILD_PATH}/right"
+
+	mkdir -p ${LBuildPath}
+	mkdir -p ${RBuildPath}
+
+	cp ${REAL_BUILD_PATH}/*.kll ${LBuildPath}
+	cp ${REAL_BUILD_PATH}/*.kll ${RBuildPath}
 
 	# Show commands
 	set -x
 
 	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
 
+	RETVAL_L=$?
+
 	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
 
-	ln -s "${LBuildPath}/kiibohd.dfu.bin" "${REAL_BUILD_PATH}/left_kiibohd.dfu.bin"
-	ln -s "${LBuildPath}/kiibohd.secure.dfu.bin" "${REAL_BUILD_PATH}/left_kiibohd.secure.dfu.bin"
-	ln -s "${LBuildPath}/kll.json" "${REAL_BUILD_PATH}/left_kll.json"
-	ln -s "${LBuildPath}/log/generatedKeymap.h" "${REAL_BUILD_PATH}/left_generatedKeymap.h"
-	ln -s "${LBuildPath}/log/kll_defs.h" "${REAL_BUILD_PATH}/left_kll_defs.h"
+	RETVAL_R=$?
 
-	ln -s "${RBuildPath}/kiibohd.dfu.bin" "${REAL_BUILD_PATH}/right_kiibohd.dfu.bin"
-	ln -s "${RBuildPath}/kiibohd.secure.dfu.bin" "${REAL_BUILD_PATH}/right_kiibohd.secure.dfu.bin"
-	ln -s "${RBuildPath}/kll.json" "${REAL_BUILD_PATH}/right_kll.json"
-	ln -s "${RBuildPath}/log/generatedKeymap.h" "${REAL_BUILD_PATH}/right_generatedKeymap.h"
-	ln -s "${RBuildPath}/log/kll_defs.h" "${REAL_BUILD_PATH}/right_kll_defs.h"
+	if (($RETVAL_L != 0)); then
+		RETVAL=$RETVAL_L
+	elif (($RETVAL_R != 0)); then
+		RETVAL=$RETVAL_R
+	else
+		RETVAL=0  
+		ln -s ${LBuildPath}/kiibohd.dfu.bin ${REAL_BUILD_PATH}/left_kiibohd.dfu.bin
+		ln -s ${LBuildPath}/kiibohd.secure.dfu.bin ${REAL_BUILD_PATH}/left_kiibohd.secure.dfu.bin
+		ln -s ${LBuildPath}/kll.json ${REAL_BUILD_PATH}/left_kll.json
+		ln -s ${LBuildPath}/log/generatedKeymap.h ${REAL_BUILD_PATH}/left_generatedKeymap.h
+		ln -s ${LBuildPath}/log/kll_defs.h ${REAL_BUILD_PATH}/left_kll_defs.h
+		ln -s ${RBuildPath}/kiibohd.dfu.bin ${REAL_BUILD_PATH}/right_kiibohd.dfu.bin
+		ln -s ${RBuildPath}/kiibohd.secure.dfu.bin ${REAL_BUILD_PATH}/right_kiibohd.secure.dfu.bin
+		ln -s ${RBuildPath}/kll.json ${REAL_BUILD_PATH}/right_kll.json
+		ln -s ${RBuildPath}/log/generatedKeymap.h ${REAL_BUILD_PATH}/right_generatedKeymap.h
+		ln -s ${RBuildPath}/log/kll_defs.h ${REAL_BUILD_PATH}/right_kll_defs.h
+	fi
 fi
-
-RETVAL=$?
 
 # Stop showing commands
 set +x
 
+echo "Compilation Completed."
+
 # If the build failed, make clean, then build again
 # Build log will be easier to read
 if (($RETVAL != 0)); then
-	# If the build still failed, make sure to remove any old .dfu.bin files
-	if [ $RETVAL -ne 0 ]; then
-		rm -f "${BUILD_PATH}/*.dfu.bin"
-	fi
+	rm -f "${BUILD_PATH}/*.dfu.bin"
 fi
 
 exit $RETVAL
