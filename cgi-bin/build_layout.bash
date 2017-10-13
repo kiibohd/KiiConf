@@ -88,7 +88,7 @@ if [ "${SCAN_MODULE}" != "MDErgo1" ]; then
 	# Use this line if you want to enable debug logging.
 	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
 
 	RETVAL=$?
 else
@@ -104,11 +104,11 @@ else
 	# Show commands
 	set -x
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
 
 	RETVAL_L=$?
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
 
 	RETVAL_R=$?
 
@@ -117,7 +117,7 @@ else
 	elif (($RETVAL_R != 0)); then
 		RETVAL=$RETVAL_R
 	else
-		RETVAL=0  
+		RETVAL=0
 		ln -s ${LBuildPath}/kiibohd.dfu.bin ${REAL_BUILD_PATH}/left_kiibohd.dfu.bin
 		ln -s ${LBuildPath}/kiibohd.secure.dfu.bin ${REAL_BUILD_PATH}/left_kiibohd.secure.dfu.bin
 		ln -s ${LBuildPath}/kll.json ${REAL_BUILD_PATH}/left_kll.json
