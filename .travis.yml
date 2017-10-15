@@ -1,0 +1,27 @@
+# travis-ci integration for kiibohd/KiiConf
+
+sudo:
+  - false
+
+jobs:
+  include:
+  - stage: Build Docker Image
+    # Generate Docker Image and deploy to Docker Hub
+    # Make sure to tag the image with a git hash or we may get conflicting builds
+    script:
+    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - docker build -t kiiconf-travis-ci .
+    - docker images
+    - docker tag kiiconf-travis-ci $DOCKER_USERNAME/kiiconf-travis-ci:travis-$TRAVIS_BUILD_NUMBER
+    - docker tag kiiconf-travis-ci $DOCKER_USERNAME/kiiconf-travis-ci:${TRAVIS_COMMIT::8}
+    - docker push $DOCKER_USERNAME/kiiconf-travis-ci
+  - stage: Tests
+    script:
+    # Build all KiiConf targets using generic kll configs
+    - docker run -t -u 33:33 --rm $DOCKER_USERNAME/kiiconf-travis-ci:${TRAVIS_COMMIT::8} tests/build_test.bash
+  - script:
+    # Setup basic webserver and do basic query
+    - docker run -d -p 127.0.0.1:80:80 --rm --name kiiconf-travis-ci-webtest $DOCKER_USERNAME/kiiconf-travis-ci:${TRAVIS_COMMIT::8}
+    - wget -O /dev/null 127.0.0.1
+    - docker stop kiiconf-travis-ci-webtest
+

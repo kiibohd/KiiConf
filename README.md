@@ -1,5 +1,7 @@
 # KiiConf
 
+[![Travis Status](https://travis-ci.org/kiibohd/KiiConf.svg?branch=master)](https://travis-ci.org/kiibohd/KiiConf)
+
 [![Visit our IRC channel](https://kiwiirc.com/buttons/irc.freenode.net/input.club.png)](https://kiwiirc.com/client/irc.freenode.net/#input.club)
 
 KiiConf is composed by two main programs:
@@ -27,6 +29,7 @@ The configurator loads the layout and lets the user configure the keyboard layer
 * python3
 * git
 * node.js
+* hexdump (bsdmainutils)
 
 #### Recommended
 
@@ -51,3 +54,25 @@ cd KiiConf
 * Finally build the project with gulp (if globally installed) `gulp dev`
 
 The dev build will create a `dist` directory and symlink to the `controller` and `tmp` directories to allow ensure you do not have to re-build or download them.
+
+
+
+## Docker Environment
+
+**NOTE:** Docker environment is not yet complete, but should work well for testing
+
+See [Dockerfile](Dockerfile) for usage examples.
+
+
+### Dependencies
+
+* docker
+* Make sure docker info is working
+
+
+### Sanity Check
+
+```bash
+tests/docker_test.bash
+```
+
