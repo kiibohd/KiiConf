@@ -54,12 +54,12 @@ try {
 				foreach ( $key->layers as $l => $layer ) {
 					$layers[$l][$default[$idxInDef]->layers->{0}->key] = $layer->key;
 				}
-				
+
 				// Process "trigger" entries
 				if (isset($key->triggers)) {
 					foreach ($key->triggers as $t => $trigger) {
 						$triggers[$t][$default[$idxInDef]->layers->{0}->key] = $trigger;
-					}	
+					}
 				}
 			}
 		}
@@ -75,7 +75,7 @@ try {
 			if (isset($key->triggers)) {
 				foreach ($key->triggers as $t => $trigger) {
 					$triggers[$t][$default[$i]->layers->{0}->key] = $trigger;
-				}	
+				}
 			}
 		}
 	}
@@ -103,7 +103,7 @@ try {
 					// Output comment lines raw.
 					$s = $s . $frame . "\n";
 				} else {
-					$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . "\n";
+					$s = $s . 'A[' . $k . ', ' . $i . '] <= ' . $frame . ";\n";
 					$i++;
 				}
 			}
@@ -136,7 +136,7 @@ try {
 		if (isset($triggers[$n])) {
 			$triggersOut = implode("\n", array_map(function($v, $k) {
 				$s = "";
-				
+
 				foreach ($v as $t) {
 					if ($s !== "") {
 						$s = $s . "\n";
