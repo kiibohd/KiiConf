@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>KII Keyboard Configurator</title>
 
-    <!-- <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="lib/polyfill.min.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/lodash.min.js"></script>
@@ -15,11 +15,10 @@
     <script src="js/emitter.js"></script>
     <script src="js/key.js"></script>
     <script src="js/import-map.js"></script>
-    <script src="js/configurator.js"></script> -->
+    <script src="js/configurator.js"></script>
 </head>
 <body class="configurator">
-    <h1>This is not the configurator you're looking for...</h1>
-<!-- <div id="wrapper" class="wrapper">
+<div id="wrapper" class="wrapper">
     <nav class="cf">
         <div id="layout-list" class="pseudo-select">
             <span id="active-layout-title">&nbsp;</span>
@@ -54,6 +53,20 @@
 </div>
 
 <div id="shortcuts" class="shortcuts cf" style="display:none">
+
+    <!-- Need to move this creation with the others -->
+   <div id="group-special" class="group">
+        <div class="title">
+            <span class="title-name">special</span>
+            <span class="toggle-vis" data-group="special">[hide]</span>
+        </div>
+        <ul class="group-data">
+            <li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
+        </ul>
+    </div>
+
+</div>
+<div class="shortcuts cf" style="display:none">
     <div id="group-kll-headers" class="group">
         <div class="title">
             <span class="title-name">kll headers</span>
@@ -96,7 +109,6 @@
             </div>
         </div>
     </div>
-
     <div id="group-kll-defines" class="group">
         <div class="title">
             <span class="title-name">kll defines</span>
@@ -111,21 +123,11 @@
                 </div>
             </div>
         </div>
-    </div> -->
-
-    <!-- Need to move this creation with the others -->
-<!--    <div id="group-special" class="group">
-        <div class="title">
-            <span class="title-name">special</span>
-            <span class="toggle-vis" data-group="special">[hide]</span>
-        </div>
-        <ul class="group-data">
-            <li><span id="clear-key" class="shortcut-button" data-key="*CLEAR">CLR-KEY</span></li>
-        </ul>
     </div>
 </div>
+
 <script>
     $(document).ready(function (){ Configurator.create().init(); });
-</script> -->
+</script>
 </body>
 </html>

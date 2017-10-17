@@ -163,10 +163,20 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
             map = utils.getLsItem(lastMapKey) || '';
         }
 
-        map = _.trim(map, "' ") || 'WhiteFox-TrueFoxBlank';
+        var defaultLayout = 'WhiteFox-TheTrueFox';
+        map = _.trim(map, "' ") || defaultLayout;
+
+        function layoutSplit(str) {
+            var parts = str.split('-');
+            return [parts.slice(0, parts.length - 1).join('-'), parts[parts.length -1]]
+        }
 
         $.getJSON(SETTINGS.URI + 'layouts.php', (layouts) => {
-            var [selKbd, selVar] = map.split('-', 2);
+            var [selKbd, selVar] = layoutSplit(map);
+            if (!layouts[selKbd] || !layouts[selKbd].includes(selVar)) {
+                [selKbd, selVar] = layoutSplit(defaultLayout);
+            }
+
             var rendered = this.templates.layout({ layouts, selKbd, selVar });
 
             $("#layout-list").replaceWith(rendered);
@@ -231,6 +241,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         this.clearLayout();
         this.header = layout.header;
         this.defines = layout.defines || [];
+        this.leds = layout.leds || [];
+        this.custom = layout.custom || {};
+        this.animations = layout.animations || {};
 
         // Bind the headers
         $('#kll-header-name').val(this.header.Name);
@@ -285,7 +298,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
             height: (maxY - minY) * SETTINGS.GRID_SIZE + 40 + 'px'
         });
 
-        $('#shortcuts').show();
+        $('.shortcuts').show();
     }
 
     function buildTemplates() {
@@ -438,9 +451,9 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         $.ajax({
             type: 'post',
             url: SETTINGS.URI + 'download.php',
-            data: {
-                'map': JSON.stringify(map),
-            },
+            data: JSON.stringify(map),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             success: function (response) {
                 if ('error' in response) {
                     alert( response.error );
@@ -490,10 +503,19 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
                 defines.push({name, value});
             });
 
+        var leds = _.cloneDeep(this.leds);
+
+        var custom = _.cloneDeep(this.custom);
+
+        var animations = _.cloneDeep(this.animations);
+
         return {
             header: header,
             defines: defines,
-            matrix: matrix
+            matrix: matrix,
+            leds: leds,
+            custom: custom,
+            animations: animations
         };
     }
 

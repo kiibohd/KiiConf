@@ -9,8 +9,8 @@ try {
 
 	//Make sure that the content type of the POST request has been set to application/json
 	$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
-	if(strcasecmp($contentType, 'application/json') != 0){
-		throw new Exception('Content type must be: application/json');
+	if(strpos($contentType, 'application/json') === false){
+		throw new Exception('Content type must be: application/json -- was ' . $contentType);
 	}
 
 	$map_orig = file_get_contents("php://input");
