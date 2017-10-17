@@ -3,6 +3,7 @@
 $keyboards = [];
 
 $keyboards['K-Type'][] = 'Standard';
+$keyboards['K-Type'][] = 'NoAnimations';
 
 $keyboards['MD1.1'][] = 'Alphabet';
 $keyboards['MD1.1'][] = 'AlphabetBlank';
