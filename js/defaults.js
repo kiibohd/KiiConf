@@ -550,9 +550,9 @@ var DEFAULTS = (function (def) {
             'LAT16': {y: 28, x: 60, w: 4, h: 4, label: 'LATCH-16'},
             'LATCH16': {y: 28, x: 60, w: 4, h: 4, label: 'LATCH-16'},
 
-            '#:ledControl( 3, 15, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED-', group: 'special'},
-            '#:ledControl( 4, 15, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED+', group: 'special'},
-            '#:ledControl( 5, 0, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED OFF', group: 'special'},
+            '#:ledControl( 3, 15 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED-', group: 'special'},
+            '#:ledControl( 4, 15 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED+', group: 'special'},
+            '#:ledControl( 5, 0 )': {y: 28, x: 0, w: 4, h: 4, label: 'LED OFF', group: 'special'},
 
             '#:flashMode()': {y: 28, x: 0, w: 4, h: 4, label: 'FLASH', group: 'special'},
             '#:toggleKbdProtocol()': {y: 28, x: 0, w: 4, h: 4, label: '6/N-KRO', group: 'special'},
