@@ -1,8 +1,8 @@
 layouts/*.json
-tmp/*.zip
-tmp/*/
+tmp*/*.zip
+tmp*/*/
 stats.json
-controller/*
+controller*/*
 dist/*
 node_modules/*
 .vscode/*

@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "clean": "rm -r dist/* || true",
-    "build:link": "ln -sf \"$PWD/controller\" dist/controller && ln -sf \"$PWD/tmp\" dist/tmp",
+    "build:link": "ln -sf \"$PWD/controller\" dist/controller && ln -sf \"$PWD/tmp\" dist/tmp && ln -sf \"$PWD/controller-lts\" dist/controller-lts && ln -sf \"$PWD/tmp-lts\" dist/tmp-lts",
     "build:css": "lessc css/style.less dist/css/style.css",
     "build:html": "cp *.html *.php stats.json dist/",
     "build:img": "mkdir -p dist/img && cp img/*.png img/*.svg dist/img",

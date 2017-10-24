@@ -28,6 +28,13 @@
         <input type="button" onclick="window.open('stats.json', '_blank');" value="Version" />
         <div class="pull-right">
             <button type="button" id="reset-layout" class="button-reset" disabled>reset to default</button>
+            <label> Firmware Ver:
+                <select id="compiler-mode" name="compiler-mode">
+                    <option value="latest" selected>latest</option>
+                    <option value="lts">lts</option>
+                </select>
+            </label>
+
             <button type="button" id="download-map" class="button-write pull-right">download firmware</button>
         </div>
     </nav>

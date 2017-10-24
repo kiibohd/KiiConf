@@ -448,10 +448,15 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
     function downloadMap() {
         var map = this.serializeKeyboardMap();
 
+        var req = {
+            config: map,
+            env: $("#compiler-mode option:selected").text()
+        };
+
         $.ajax({
             type: 'post',
             url: SETTINGS.URI + 'download.php',
-            data: JSON.stringify(map),
+            data: JSON.stringify(req),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {

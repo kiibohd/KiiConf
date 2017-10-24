@@ -13,17 +13,21 @@ try {
 		throw new Exception('Content type must be: application/json -- was ' . $contentType);
 	}
 
-	$map_orig = file_get_contents("php://input");
+	$raw = file_get_contents("php://input");
+	$decoded = @json_decode($raw);
 
-	$map = @json_decode( $map_orig );
-
-	if ($map === null && json_last_error() !== JSON_ERROR_NONE) {
+	if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
 		throw new Exception('Invalid JSON, unable to parse.');
 	}
+	$config = $decoded->config;
+	// Default to latest unless we're told to flip to lts
+	$is_lts = ($decoded->env === "lts");
 
-	$name = !empty( $map->header->Name ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $map->header->Name)) : '';
-	$layout = !empty( $map->header->Layout ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $map->header->Layout)) : '';
-	$base_layout = !empty( $map->header->Base ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $map->header->Base)) : '';
+	// LTS will disable: Trigger & Animations, and will re-write LED controls
+
+	$name = !empty( $config->header->Name ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Name)) : '';
+	$layout = !empty( $config->header->Layout ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Layout)) : '';
+	$base_layout = !empty( $config->header->Base ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Base)) : '';
 
 	if ( !$name || !$layout ) {
 		throw new Exception('Invalid Header Information');
@@ -41,7 +45,7 @@ try {
 		// WhiteFox layouts have fewer keys than the defaultMap so we need to verify based
 		//  upon the scan codes rather than just a sequence. Long term this method should
 		//  probably be the preferred method for building up layer files
-		foreach ( $map->matrix as $i => $key ) {
+		foreach ( $config->matrix as $i => $key ) {
 			// First find the corresponding key via scan code
 			$idxInDef = -1;
 			foreach ( $default as $j => $defkey ) {
@@ -56,7 +60,7 @@ try {
 				}
 
 				// Process "trigger" entries
-				if (isset($key->triggers)) {
+				if (!$is_lts && isset($key->triggers)) {
 					foreach ($key->triggers as $t => $trigger) {
 						$triggers[$t][$default[$idxInDef]->layers->{0}->key] = $trigger;
 					}
@@ -65,14 +69,14 @@ try {
 		}
 	}
 	else {
-		foreach ( $map->matrix as $i => $key ) {
+		foreach ( $config->matrix as $i => $key ) {
 			// Process "layer" entries
 			foreach ( $key->layers as $l => $layer ) {
 				$layers[$l][$default[$i]->layers->{0}->key] = $layer->key;
 			}
 
 			// Process "trigger" entries
-			if (isset($key->triggers)) {
+			if (!$is_lts && isset($key->triggers)) {
 				foreach ($key->triggers as $t => $trigger) {
 					$triggers[$t][$default[$i]->layers->{0}->key] = $trigger;
 				}
@@ -80,8 +84,8 @@ try {
 		}
 	}
 
-	$header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$map->header, array_keys((array)$map->header)));
-	$defines = implode("\n", array_map(function ($v) { return $v->name . ' = "' . $v->value . '";' . "\n"; }, (array)$map->defines));
+	$header = implode("\n", array_map(function ($v, $k) { return $k . ' = "' . $v . '";'; }, (array)$config->header, array_keys((array)$config->header)));
+	$defines = implode("\n", array_map(function ($v) { return $v->name . ' = "' . $v->value . '";' . "\n"; }, (array)$config->defines));
 
 	$files = array();
 	$file_args = array();
@@ -93,7 +97,7 @@ try {
 	$layout_name = $name . '-' . $layout;
 
 	$animations = '';
-	if ( isset($map->animations) ) {
+	if ( !$is_lts && isset($config->animations) ) {
 		$animations = implode("\n", array_map(function($v, $k) {
 			$s = 'A[' . $k . '] <= ' . $v->settings . ";\n";
 
@@ -109,16 +113,35 @@ try {
 			}
 
 			return $s;
-		}, (array)$map->animations, array_keys((array)$map->animations)));
+		}, (array)$config->animations, array_keys((array)$config->animations)));
 	}
 
 	// Generate .kll files
 	$max_layer = 0;
 	foreach ( $layers as $n => $layer ) {
-		$out = implode("\n", array_map(function ($v, $k) {
+		$out = implode("\n", array_map(function ($v, $k) use ($is_lts) {
+			$comment_out = false;
 			if ( preg_match("/^((CONS|SYS|#):)?(.+)/i", $v, $match) ) {
 				if ( $match[2] == '#' ) {
-					$v = $match[3];
+					if ($is_lts && strpos($match[3], 'ledControl') !== false) {
+						switch (str_replace(' ', '', $match[3])) {
+							case 'ledControl(0,15)': // LED-
+								$v = 'ledControl( 3, 15, 0 )';
+								break;
+							case 'ledControl(1,15)': // LED+
+								$v = 'ledControl( 4, 15, 0 )';
+								break;
+							case 'ledControl(3,0)':  // LED OFF
+								$v = 'ledControl( 5, 0, 0)';
+								break;
+							default:
+								$comment_out = true;
+						}
+					} elseif ($is_lts && strpos($match[3], 'animation_control') !== false) {
+						$comment_out = true;
+					} else {
+						$v = $match[3];
+					}
 				} else if ( $match[2] == 'CONS' or $match[2] == 'SYS' ) {
 					$v = $match[2] . '"' . $match[3] . '"';
 				} else {
@@ -128,7 +151,7 @@ try {
 				$v = 'U"' . $v . '"';
 			}
 
-			return 'U"' . $k . '" : ' . $v . ';';
+			return ($comment_out ? '#' : '') . 'U"' . $k . '" : ' . $v . ';';
 
 		}, $layer, array_keys($layer)));
 
@@ -149,8 +172,8 @@ try {
 		}
 
 		$custom = "";
-		if (isset($map->custom) && isset($map->custom->$n)) {
-			$custom = "\n\n" . $map->custom->$n;
+		if (isset($config->custom) && isset($config->custom->$n)) {
+			$custom = "\n\n" . $config->custom->$n;
 		}
 
 		if ($n == 0) {
@@ -167,9 +190,12 @@ try {
 		}
 	}
 
+	// LTS and Latest paths are separated.
+	$tmp_path = $is_lts ? './tmp-lts' : './tmp';
+	$build_script = $is_lts ? 'cgi-bin/build_layout_lts.bash' : 'cgi-bin/build_layout.bash';
+
 	$md5sum = md5( $hashbaby );
-	$zip_path = './tmp';
-	$zipfile = $zip_path . '/' . $layout_name . '-' . $md5sum . '.zip';
+	$zipfile = $tmp_path . '/' . $layout_name . '-' . $md5sum . '.zip';
 
 	// check if we already created the same zip file
 	if ( file_exists($zipfile) ) {
@@ -179,18 +205,18 @@ try {
 
 	// Now that the layout files are ready, create directory for compilation object files
 	$uid = uniqid(true);	// prevent compilation overlap on very close requests
-	$objpath = $zip_path . '/' . $md5sum . $uid;
+	$objpath = $tmp_path . '/' . $md5sum . $uid;
 	mkdir( $objpath, 0700 );
 
 
 	// Save the configuration json to the folder in order to import later
 	$path = $objpath . '/' .$name . '-' . $layout . '.json';
-	file_put_contents( $path, json_encode( $map, JSON_PRETTY_PRINT ) );
+	file_put_contents( $path, json_encode( $config, JSON_PRETTY_PRINT ) );
 
 
 	// Run compilation, very simple, 1 layer per entry (script supports complicated entries)
 	$log_file = $objpath . '/build.log';
-	$cmd = 'cgi-bin/build_layout.bash ' . $md5sum . $uid . ' ' . $name . ' ';
+	$cmd = $build_script . ' ' . $md5sum . $uid . ' ' . $name . ' ';
 	for ( $c = 0; $c <= $max_layer; $c++ ) {
 		$path = $objpath . '/' . $files[$c]['name'];
 		file_put_contents( $path, $files[$c]['content'] ); // Write kll file
@@ -214,7 +240,7 @@ try {
 
 
 	// Always create the zip file (the date is always updated, which changes the binary)
-	$zipfile = $zip_path . '/' . $layout_name . '-' . $md5sum . $uid . $error_str . '.zip';
+	$zipfile = $tmp_path . '/' . $layout_name . '-' . $md5sum . $uid . $error_str . '.zip';
 	$zip = new ZipArchive;
 	$zip->open( $zipfile, ZipArchive::CREATE );
 	$kll_files  = glob( $objpath . "/*.kll", GLOB_NOCHECK );
@@ -240,7 +266,7 @@ try {
 
 	$zip->close();
 
-	$newzip = $zip_path . '/' . $layout_name . '-' . $md5sum . $error_str . '.zip';
+	$newzip = $tmp_path . '/' . $layout_name . '-' . $md5sum . $error_str . '.zip';
 
 	// check if someone else compiled the same firmware at the same time
 	if ( file_exists( $newzip ) ) {
