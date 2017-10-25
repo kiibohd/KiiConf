@@ -45,6 +45,15 @@ try {
 		// WhiteFox layouts have fewer keys than the defaultMap so we need to verify based
 		//  upon the scan codes rather than just a sequence. Long term this method should
 		//  probably be the preferred method for building up layer files
+
+		// Between LTS and Latest the scancode mapping for White Fox changed. Previously
+		//  there was a single all encompassing map, now there are a number of smaller
+		//  ones that have different (sensible) default scancode mappings. This causes
+		//  a little bit of havok due to the way layering works, we override what was
+		//  previously there, we'll look for a special `.lts.json` file here.
+		$lts_base_name = './layouts/' . $name . '-' . $base_layout . 'lts.json';
+		$default = json_decode(file_get_contents($lts_base_name))->matrix;
+
 		foreach ( $config->matrix as $i => $key ) {
 			// First find the corresponding key via scan code
 			$idxInDef = -1;
