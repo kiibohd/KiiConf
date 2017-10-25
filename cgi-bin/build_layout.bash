@@ -6,9 +6,9 @@
 # Arg 4: Layer 1
 # Arg 5: Layer 2
 # etc.
-# Example: ./build_layout.bash <hash> <scan module> <default map> <layer1> <layer2>
-#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 MD1-Hacker-0.kll MD1-Hacker-1.kll
-#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" MD1-Hacker-1.kll
+# Example: ./build_layout.bash <hash> <scan module> <variant> <default map> <layer1> <layer2>
+#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" MD1-Hacker-0.kll MD1-Hacker-1.kll
+#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" "" MD1-Hacker-1.kll
 # NOTE: If a layer is blank, set it as ""
 
 # Takes a layer path, moves it to the build directory then prints the layer name(s)
@@ -37,6 +37,9 @@ REAL_BUILD_PATH=$(realpath ${BUILD_PATH})
 
 # Get Scan Module
 SCAN_MODULE="${1}"; shift
+
+# Variant
+VARIANT="${1}"; shift
 
 # Create build directory if necessary
 mkdir -p "${BUILD_PATH}"
@@ -80,18 +83,19 @@ while (( "$#" >= "1" )); do
 	shift
 done
 
-
-if [ "${SCAN_MODULE}" != "MDErgo1" ]; then
+case "$SCAN_MODULE" in
+"WhiteFox")
 	# Show commands
 	set -x
 
 	# Use this line if you want to enable debug logging.
-	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+	#BaseMapOverride="scancode_map scancode_map.${VARIANT}" DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
+	BaseMapOverride="scancode_map scancode_map.${VARIANT}" DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
 
 	RETVAL=$?
-else
+	;;
+"MDErgo1")
 	LBuildPath="${REAL_BUILD_PATH}/left"
 	RBuildPath="${REAL_BUILD_PATH}/right"
 
@@ -129,7 +133,19 @@ else
 		ln -s ${RBuildPath}/log/generatedKeymap.h ${REAL_BUILD_PATH}/right_generatedKeymap.h
 		ln -s ${RBuildPath}/log/kll_defs.h ${REAL_BUILD_PATH}/right_kll_defs.h
 	fi
-fi
+	;;
+*)
+	# Show commands
+	set -x
+
+	# Use this line if you want to enable debug logging.
+	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
+
+	RETVAL=$?
+	;;
+esac
 
 # Stop showing commands
 set +x

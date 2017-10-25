@@ -1,13 +1,13 @@
 {
     "header": {
-        "Name": "MD1.1",
-        "Variant": "standard",
-        "Layout": "StandardBlank",
-        "Base": "StandardBlank",
+        "Name": "WhiteFox",
+        "Variant": "vanilla",
+        "Layout": "VanillaBase",
+        "Base": "VanillaBase",
         "Version": "0.2",
-        "Author": "HaaTa (Jacob Alexander) 2014",
-        "KLL": "0.3",
-        "Date": "2014-09-14",
+        "Author": "HaaTa (Jacob Alexander) 2015",
+        "KLL": "0.3c",
+        "Date": "2016-05-30",
         "Generator": "KIICONF 0.2"
     },
     "matrix": [
@@ -19,8 +19,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "ESC",
-                    "label": "ESC"
+                    "key": "ESC"
                 }
             }
         },
@@ -32,8 +31,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "1",
-                    "label": "1"
+                    "key": "1"
                 }
             }
         },
@@ -45,8 +43,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "2",
-                    "label": "2"
+                    "key": "2"
                 }
             }
         },
@@ -58,8 +55,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "3",
-                    "label": "3"
+                    "key": "3"
                 }
             }
         },
@@ -71,8 +67,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "4",
-                    "label": "4"
+                    "key": "4"
                 }
             }
         },
@@ -84,8 +79,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "5",
-                    "label": "5"
+                    "key": "5"
                 }
             }
         },
@@ -97,8 +91,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "6",
-                    "label": "6"
+                    "key": "6"
                 }
             }
         },
@@ -110,8 +103,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "7",
-                    "label": "7"
+                    "key": "7"
                 }
             }
         },
@@ -123,8 +115,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "8",
-                    "label": "8"
+                    "key": "8"
                 }
             }
         },
@@ -136,8 +127,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "9",
-                    "label": "9"
+                    "key": "9"
                 }
             }
         },
@@ -149,8 +139,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "0",
-                    "label": "0"
+                    "key": "0"
                 }
             }
         },
@@ -162,8 +151,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "MINUS",
-                    "label": "-"
+                    "key": "MINUS"
                 }
             }
         },
@@ -175,658 +163,667 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "EQUAL",
-                    "label": "="
-                }
-            }
-        },
-        {
-            "code": "0x0D",
-            "x": 62,
-            "y": 5,
-            "w": 4,
-            "h": 4,
-            "layers": {
-                "0": {
-                    "key": "BACKSLASH",
-                    "label": "\\"
+                    "key": "EQUAL"
                 }
             }
         },
         {
             "code": "0x0E",
-            "x": 66,
+            "x": 62,
             "y": 5,
-            "w": 4,
+            "w": 8,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKTICK",
-                    "label": "`"
+                    "key": "BACKSPACE"
                 }
             }
         },
         {
             "code": "0x0F",
+            "x": 70,
+            "y": 5,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "BACKTICK"
+                }
+            }
+        },
+        {
+            "code": "0x10",
             "x": 10,
             "y": 9,
             "w": 6,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "TAB",
-                    "label": "TAB"
+                    "key": "TAB"
                 }
             }
         },
         {
-            "code": "0x10",
+            "code": "0x11",
             "x": 16,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "Q",
-                    "label": "Q"
+                    "key": "Q"
                 }
             }
         },
         {
-            "code": "0x11",
+            "code": "0x12",
             "x": 20,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "W",
-                    "label": "W"
+                    "key": "W"
                 }
             }
         },
         {
-            "code": "0x12",
+            "code": "0x13",
             "x": 24,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "E",
-                    "label": "E"
+                    "key": "E"
                 }
             }
         },
         {
-            "code": "0x13",
+            "code": "0x14",
             "x": 28,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "R",
-                    "label": "R"
+                    "key": "R"
                 }
             }
         },
         {
-            "code": "0x14",
+            "code": "0x15",
             "x": 32,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "T",
-                    "label": "T"
+                    "key": "T"
                 }
             }
         },
         {
-            "code": "0x15",
+            "code": "0x16",
             "x": 36,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "Y",
-                    "label": "Y"
+                    "key": "Y"
                 }
             }
         },
         {
-            "code": "0x16",
+            "code": "0x17",
             "x": 40,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "U",
-                    "label": "U"
+                    "key": "U"
                 }
             }
         },
         {
-            "code": "0x17",
+            "code": "0x18",
             "x": 44,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "I",
-                    "label": "I"
+                    "key": "I"
                 }
             }
         },
         {
-            "code": "0x18",
+            "code": "0x19",
             "x": 48,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "O",
-                    "label": "O"
+                    "key": "O"
                 }
             }
         },
         {
-            "code": "0x19",
+            "code": "0x1A",
             "x": 52,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "P",
-                    "label": "P"
+                    "key": "P"
                 }
             }
         },
         {
-            "code": "0x1A",
+            "code": "0x1B",
             "x": 56,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LBRACE",
-                    "label": "["
+                    "key": "LBRACE"
                 }
             }
         },
         {
-            "code": "0x1B",
+            "code": "0x1C",
             "x": 60,
             "y": 9,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RBRACE",
-                    "label": "]"
+                    "key": "RBRACE"
                 }
             }
         },
         {
-            "code": "0x1C",
+            "code": "0x1D",
             "x": 64,
             "y": 9,
             "w": 6,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSPACE",
-                    "label": "BKSP"
+                    "key": "BACKSLASH"
                 }
             }
         },
         {
-            "code": "0x1D",
+            "code": "0x1E",
+            "x": 70,
+            "y": 9,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "DELETE"
+                }
+            }
+        },
+        {
+            "code": "0x1F",
             "x": 10,
             "y": 13,
             "w": 7,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "CTRL",
-                    "label": "LCTRL"
+                    "key": "CAPSLOCK"
                 }
             }
         },
         {
-            "code": "0x1E",
+            "code": "0x20",
             "x": 17,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "A",
-                    "label": "A"
+                    "key": "A"
                 }
             }
         },
         {
-            "code": "0x1F",
+            "code": "0x21",
             "x": 21,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "S",
-                    "label": "S"
+                    "key": "S"
                 }
             }
         },
         {
-            "code": "0x20",
+            "code": "0x22",
             "x": 25,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "D",
-                    "label": "D"
+                    "key": "D"
                 }
             }
         },
         {
-            "code": "0x21",
+            "code": "0x23",
             "x": 29,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "F",
-                    "label": "F"
+                    "key": "F"
                 }
             }
         },
         {
-            "code": "0x22",
+            "code": "0x24",
             "x": 33,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "G",
-                    "label": "G"
+                    "key": "G"
                 }
             }
         },
         {
-            "code": "0x23",
+            "code": "0x25",
             "x": 37,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "H",
-                    "label": "H"
+                    "key": "H"
                 }
             }
         },
         {
-            "code": "0x24",
+            "code": "0x26",
             "x": 41,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "J",
-                    "label": "J"
+                    "key": "J"
                 }
             }
         },
         {
-            "code": "0x25",
+            "code": "0x27",
             "x": 45,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "K",
-                    "label": "K"
+                    "key": "K"
                 }
             }
         },
         {
-            "code": "0x26",
+            "code": "0x28",
             "x": 49,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "L",
-                    "label": "L"
+                    "key": "L"
                 }
             }
         },
         {
-            "code": "0x27",
+            "code": "0x29",
             "x": 53,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "SEMICOLON",
-                    "label": ";"
+                    "key": "SEMICOLON"
                 }
             }
         },
         {
-            "code": "0x28",
+            "code": "0x2A",
             "x": 57,
             "y": 13,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "QUOTE",
-                    "label": "'"
+                    "key": "QUOTE"
                 }
             }
         },
         {
-            "code": "0x29",
+            "code": "0x2C",
             "x": 61,
             "y": 13,
             "w": 9,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "ENTER",
-                    "label": "\u21b5"
+                    "key": "ENTER"
                 }
             }
         },
         {
-            "code": "0x2A",
+            "code": "0x2D",
+            "x": 70,
+            "y": 13,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "PAGEUP"
+                }
+            }
+        },
+        {
+            "code": "0x2E",
             "x": 10,
             "y": 17,
             "w": 9,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LSHIFT",
-                    "label": "L\u21d1"
+                    "key": "LSHIFT"
                 }
             }
         },
         {
-            "code": "0x2B",
+            "code": "0x30",
             "x": 19,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "Z",
-                    "label": "Z"
+                    "key": "Z"
                 }
             }
         },
         {
-            "code": "0x2C",
+            "code": "0x31",
             "x": 23,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "X",
-                    "label": "X"
+                    "key": "X"
                 }
             }
         },
         {
-            "code": "0x2D",
+            "code": "0x32",
             "x": 27,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "C",
-                    "label": "C"
+                    "key": "C"
                 }
             }
         },
         {
-            "code": "0x2E",
+            "code": "0x33",
             "x": 31,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "V",
-                    "label": "V"
+                    "key": "V"
                 }
             }
         },
         {
-            "code": "0x2F",
+            "code": "0x34",
             "x": 35,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "B",
-                    "label": "B"
+                    "key": "B"
                 }
             }
         },
         {
-            "code": "0x30",
+            "code": "0x35",
             "x": 39,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "N",
-                    "label": "N"
+                    "key": "N"
                 }
             }
         },
         {
-            "code": "0x31",
+            "code": "0x36",
             "x": 43,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "M",
-                    "label": "M"
+                    "key": "M"
                 }
             }
         },
         {
-            "code": "0x32",
+            "code": "0x37",
             "x": 47,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "COMMA",
-                    "label": ","
+                    "key": "COMMA"
                 }
             }
         },
         {
-            "code": "0x33",
+            "code": "0x38",
             "x": 51,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "PERIOD",
-                    "label": "."
+                    "key": "PERIOD"
                 }
             }
         },
         {
-            "code": "0x34",
+            "code": "0x39",
             "x": 55,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "SLASH",
-                    "label": "/"
+                    "key": "SLASH"
                 }
             }
         },
         {
-            "code": "0x35",
+            "code": "0x3A",
             "x": 59,
             "y": 17,
             "w": 7,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RSHIFT",
-                    "label": "R\u21d1"
+                    "key": "RSHIFT"
                 }
             }
         },
         {
-            "code": "0x36",
+            "code": "0x3B",
             "x": 66,
             "y": 17,
             "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION1",
-                    "label": "\u01921"
+                    "key": "UP"
                 }
             }
         },
         {
-            "code": "0x37",
+            "code": "0x3C",
+            "x": 70,
+            "y": 17,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "PAGEDOWN"
+                }
+            }
+        },
+        {
+            "code": "0x3D",
             "x": 10,
             "y": 21,
             "w": 5,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION2",
-                    "label": "\u01922"
+                    "key": "LCTRL"
                 }
             }
         },
         {
-            "code": "0x38",
+            "code": "0x3E",
             "x": 15,
             "y": 21,
             "w": 5,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LALT",
-                    "label": "LALT"
+                    "key": "FUNCTION1"
                 }
             }
         },
         {
-            "code": "0x39",
+            "code": "0x3F",
             "x": 20,
             "y": 21,
             "w": 5,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LGUI",
-                    "label": "LGUI"
+                    "key": "LALT"
                 }
             }
         },
         {
-            "code": "0x3A",
+            "code": "0x40",
             "x": 25,
             "y": 21,
             "w": 25,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "SPACE",
-                    "label": "[&nbsp;]"
+                    "key": "SPACE"
                 }
             }
         },
         {
-            "code": "0x3B",
+            "code": "0x41",
             "x": 50,
             "y": 21,
-            "w": 5,
+            "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RGUI",
-                    "label": "RGUI"
+                    "key": "RALT"
                 }
             }
         },
         {
-            "code": "0x3C",
-            "x": 55,
+            "code": "0x42",
+            "x": 54,
             "y": 21,
-            "w": 5,
+            "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RALT",
-                    "label": "RALT"
+                    "key": "GUI"
                 }
             }
         },
         {
-            "code": "0x3D",
-            "x": 60,
+            "code": "0x43",
+            "x": 58,
             "y": 21,
-            "w": 5,
+            "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION3",
-                    "label": "\u01923"
+                    "key": "RCTRL"
                 }
             }
         },
         {
-            "code": "0x3E",
-            "x": 65,
+            "code": "0x44",
+            "x": 62,
             "y": 21,
-            "w": 5,
+            "w": 4,
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION4",
-                    "label": "\u01924"
+                    "key": "LEFT"
+                }
+            }
+        },
+        {
+            "code": "0x45",
+            "x": 66,
+            "y": 21,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "DOWN"
+                }
+            }
+        },
+        {
+            "code": "0x46",
+            "x": 70,
+            "y": 21,
+            "w": 4,
+            "h": 4,
+            "layers": {
+                "0": {
+                    "key": "RIGHT"
                 }
             }
         }

@@ -6,9 +6,9 @@
 # Arg 4: Layer 1
 # Arg 5: Layer 2
 # etc.
-# Example: ./build_layout.bash <hash> <scan module> <default map> <layer1> <layer2>
-#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 MD1-Hacker-0.kll MD1-Hacker-1.kll
-#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" MD1-Hacker-1.kll
+# Example: ./build_layout.bash <hash> <scan module> <variant> <default map> <layer1> <layer2>
+#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" MD1-Hacker-0.kll MD1-Hacker-1.kll
+#          ./build_layout.bash c3184563548ed992bfd3574a238d3289 MD1 "" "" MD1-Hacker-1.kll
 # NOTE: If a layer is blank, set it as ""
 
 # Takes a layer path, moves it to the build directory then prints the layer name(s)
@@ -36,6 +36,9 @@ SOURCE_PATH=$(realpath controller-lts)
 
 # Get Scan Module
 SCAN_MODULE="${1}"; shift
+
+# VARIANT (UNUSED)
+VARIANT="${1}"; shift
 
 # Create build directory if necessary
 mkdir -p "${BUILD_PATH}"

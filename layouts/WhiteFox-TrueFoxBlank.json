@@ -1,8 +1,9 @@
 {
     "header": {
         "Name": "WhiteFox",
+        "Variant": "truefox",
         "Layout": "TrueFoxBlank",
-        "Base": "AllBlank",
+        "Base": "TheTrueFoxBase",
         "Version": "0.2",
         "Author": "HaaTa (Jacob Alexander) 2015",
         "KLL": "0.3c",

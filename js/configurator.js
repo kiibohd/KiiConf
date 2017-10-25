@@ -247,6 +247,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
 
         // Bind the headers
         $('#kll-header-name').val(this.header.Name);
+        $('#kll-header-variant').val(this.header.Variant);
         $('#kll-header-layout').val(this.header.Layout);
         $('#kll-header-base').val(this.header.Base);
         $('#kll-header-version').val(this.header.Version);
@@ -490,6 +491,7 @@ var Configurator = (function (DEFAULTS, SETTINGS, utils, Key, ImportMap, window,
         var header = _.clone(this.header);
         //TODO: pre-sanitize
         header.Name = $('#kll-header-name').val();
+        header.Variant = $('#kll-header-variant').val();
         header.Layout = $('#kll-header-layout').val();
         header.Base = $('#kll-header-base').val();
         header.Version = $('#kll-header-version').val();

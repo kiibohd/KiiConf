@@ -1,6 +1,7 @@
 {
     "header": {
         "Name": "MD1",
+        "Variant": "hacker",
         "Layout": "Hacker",
         "Base": "HackerBlank",
         "Version": "0.2",

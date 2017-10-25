@@ -1,8 +1,9 @@
 {
     "header": {
         "Name": "WhiteFox",
+        "Variant": "vanilla",
         "Layout": "VanillaBlank",
-        "Base": "AllBlank",
+        "Base": "VanillaBase",
         "Version": "0.2",
         "Author": "HaaTa (Jacob Alexander) 2015",
         "KLL": "0.3c",

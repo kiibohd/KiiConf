@@ -1,6 +1,7 @@
 {
     "header": {
         "Name": "KType",
+        "Variant": "standard",
         "Layout": "Standard",
         "Base": "Base",
         "Version": "0.2",

@@ -1,6 +1,7 @@
 {
     "header": {
         "Name": "MDErgo1",
+        "Variant": "standard",
         "Layout": "Blank",
         "Base": "Blank",
         "Version": "0.1",

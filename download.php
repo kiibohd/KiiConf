@@ -26,6 +26,7 @@ try {
 	// LTS will disable: Trigger & Animations, and will re-write LED controls
 
 	$name = !empty( $config->header->Name ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Name)) : '';
+	$variant = !empty( $config->header->Variant ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Variant)) : '';
 	$layout = !empty( $config->header->Layout ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Layout)) : '';
 	$base_layout = !empty( $config->header->Base ) ? preg_replace('/[^a-z0-9._]/i', '', str_replace(' ', '_', $config->header->Base)) : '';
 
@@ -46,13 +47,15 @@ try {
 		//  upon the scan codes rather than just a sequence. Long term this method should
 		//  probably be the preferred method for building up layer files
 
-		// Between LTS and Latest the scancode mapping for White Fox changed. Previously
-		//  there was a single all encompassing map, now there are a number of smaller
-		//  ones that have different (sensible) default scancode mappings. This causes
-		//  a little bit of havok due to the way layering works, we override what was
-		//  previously there, we'll look for a special `.lts.json` file here.
-		$lts_base_name = './layouts/' . $name . '-' . $base_layout . 'lts.json';
-		$default = json_decode(file_get_contents($lts_base_name))->matrix;
+		if ($is_lts) {
+			// Between LTS and Latest the scancode mapping for White Fox changed. Previously
+			//  there was a single all encompassing map, now there are a number of smaller
+			//  ones that have different (sensible) default scancode mappings. This causes
+			//  a little bit of havok due to the way layering works, we override what was
+			//  previously there, we'll look for a special `.lts.json` file here.
+			$lts_base_name = './layouts/' . $name . '-' . $base_layout . '.lts.json';
+			$default = json_decode(file_get_contents($lts_base_name))->matrix;
+		}
 
 		foreach ( $config->matrix as $i => $key ) {
 			// First find the corresponding key via scan code
@@ -225,7 +228,7 @@ try {
 
 	// Run compilation, very simple, 1 layer per entry (script supports complicated entries)
 	$log_file = $objpath . '/build.log';
-	$cmd = $build_script . ' ' . $md5sum . $uid . ' ' . $name . ' ';
+	$cmd = $build_script . ' ' . $md5sum . $uid . ' ' . $name . ' ' . $variant . ' ';
 	for ( $c = 0; $c <= $max_layer; $c++ ) {
 		$path = $objpath . '/' . $files[$c]['name'];
 		file_put_contents( $path, $files[$c]['content'] ); // Write kll file
