@@ -2205,6 +2205,21 @@
                 "P[r:i,c:i](0,0,0)"
             ],
             "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
+        },
+        "single_color": {
+            "settings": "start, replace:basic, pfunc:interp",
+            "type": "animation",
+            "description": "A nice classic single color back (and under) light.",
+            "configurable": [
+                {
+                    "name": "color",
+                    "type": "color",
+                    "default": {"r": 255, "g": 255, "b": 255}
+                }
+            ],
+            "frames": [
+                "P[c:0%](${color}), P[c:100%](${color})"
+            ]
         }
     }
 }
