@@ -1145,7 +1145,7 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "MENU",
+                    "key": "APP",
                     "label": "MENU"
                 }
             }
