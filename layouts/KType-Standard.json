@@ -1974,10 +1974,8 @@
                     "default": 3,
                     "values": [
                         {"name": "warp", "value": 1},
-                        {"name": "fast", "value": 3},
-                        {"name": "normal", "value": 5},
-                        {"name": "slow", "value": 7},
-                        {"name": "glacial", "value": 10}
+                        {"name": "fast", "value": 2},
+                        {"name": "normal", "value": 3}
                     ]
                 }
             ],
@@ -2087,10 +2085,8 @@
                     "default": 3,
                     "values": [
                         {"name": "warp", "value": 1},
-                        {"name": "fast", "value": 3},
-                        {"name": "normal", "value": 5},
-                        {"name": "slow", "value": 7},
-                        {"name": "glacial", "value": 10}
+                        {"name": "fast", "value": 2},
+                        {"name": "normal", "value": 3}
                     ]
                 }
             ],
@@ -2177,13 +2173,10 @@
                 {
                     "name": "speed",
                     "type": "select",
-                    "default": 5,
+                    "default": 2,
                     "values": [
                         {"name": "warp", "value": 1},
-                        {"name": "fast", "value": 3},
-                        {"name": "normal", "value": 5},
-                        {"name": "slow", "value": 7},
-                        {"name": "glacial", "value": 10}
+                        {"name": "fast", "value": 2}
                     ]
                 }
             ],
@@ -2191,16 +2184,10 @@
                 "### AUTO GENERATED - DO NOT EDIT ###",
                 "P[r:i,c:i](${color})",
                 "P[r:i,c:i](${color})",
-                "P[r:i,c:i](${color})",
                 "P[r:i,c:i](${color!0.1})",
-                "P[r:i,c:i](${color!0.2})",
                 "P[r:i,c:i](${color!0.3})",
-                "P[r:i,c:i](${color!0.4})",
                 "P[r:i,c:i](${color!0.5})",
-                "P[r:i,c:i](${color!0.6})",
                 "P[r:i,c:i](${color!0.7})",
-                "P[r:i,c:i](${color!0.8})",
-                "P[r:i,c:i](${color!0.9})",
                 "P[r:i,c:i](0,0,0)",
                 "P[r:i,c:i](0,0,0)"
             ],
