@@ -2125,6 +2125,48 @@
             ],
             "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
         },
+        "fingerprints_two_tone": {
+            "settings": "framedelay:${speed}, framestretch, loops:1, replace:basic",
+            "type": "reaction",
+            "description": "Leave your mark wherever you go",
+            "configurable": [
+                {
+                    "name": "start_color",
+                    "type": "color",
+                    "default": {"r": 255, "g": 0, "b": 0}
+                },
+                {
+                    "name": "end_color",
+                    "type": "color",
+                    "default": {"r": 255, "g": 255, "b": 255}
+                },
+                {
+                    "name": "speed",
+                    "type": "select",
+                    "default": 2,
+                    "values": [
+                        {"name": "warp", "value": 1},
+                        {"name": "fast", "value": 2}
+                    ]
+                }
+            ],
+            "frames": [
+                "### AUTO GENERATED - DO NOT EDIT ###",
+                "P[r:i,c:i](${start_color})",
+                "P[r:i,c:i](${start_color})",
+                "P[r:i,c:i](${start_color})",
+                "P[r:i,c:i](${start_color})",
+                "P[r:i,c:i](${start_color:end_color:0.3})",
+                "P[r:i,c:i](${start_color:end_color:0.6})",
+                "P[r:i,c:i](${start_color:end_color:0.75})",
+                "P[r:i,c:i](${start_color:end_color:0.80})",
+                "P[r:i,c:i](${start_color:end_color:0.85})",
+                "P[r:i,c:i](${start_color:end_color:0.90})",
+                "P[r:i,c:i](${start_color:end_color:0.95})",
+                "P[r:i,c:i](${end_color})"
+            ],
+            "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
+        },
         "single_color": {
             "settings": "start, replace:basic, pfunc:interp",
             "type": "animation",
