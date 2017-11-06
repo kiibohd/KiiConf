@@ -109,6 +109,7 @@ try {
 	$layout_name = $name . '-' . $layout;
 
 	$animations = '';
+	$ignored_animations = [];
 	if ( !$is_lts && isset($config->animations) ) {
 		$animations = implode("\n", array_map(function($v, $k) {
 			$s = 'A[' . $k . '] <= ' . $v->settings . ";\n";
@@ -124,7 +125,10 @@ try {
 				}
 			}
 
-			return $s;
+			if ($i > 1) { return $s; }
+
+			$ignored_animations[] = $k;
+			return '### ' . $k . ' is empty, skipping';
 		}, (array)$config->animations, array_keys((array)$config->animations)));
 	}
 
