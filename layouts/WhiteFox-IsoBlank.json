@@ -839,5 +839,13 @@
                 }
             }
         }
-    ]
+    ],
+    "animations": {
+        "all_on": {
+            "settings": "start, pfunc:interp",
+            "frames": [
+                "P[c:0%](255), P[c:100%](255)"
+            ]
+        }
+    }
 }
