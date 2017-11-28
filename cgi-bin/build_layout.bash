@@ -84,7 +84,7 @@ while (( "$#" >= "1" )); do
 done
 
 case "$SCAN_MODULE" in
-"WhiteFox")
+"WhiteFox" | "MD1.1")
 	# Show commands
 	set -x
 

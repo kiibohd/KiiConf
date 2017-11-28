@@ -188,8 +188,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSLASH",
-                    "label": "\\"
+                    "key": "BACKSPACE",
+                    "label": "BKSP"
                 }
             }
         },
@@ -370,8 +370,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "BACKSPACE",
-                    "label": "BKSP"
+                    "key": "BACKSLASH",
+                    "label": "\\"
                 }
             }
         },
@@ -383,8 +383,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "CTRL",
-                    "label": "LCTRL"
+                    "key": "CAPSLOCK",
+                    "label": "CAPSLK"
                 }
             }
         },
@@ -708,8 +708,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION2",
-                    "label": "\u01922"
+                    "key": "LCTRL",
+                    "label": "LCTRL"
                 }
             }
         },
@@ -760,8 +760,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RGUI",
-                    "label": "RGUI"
+                    "key": "RALT",
+                    "label": "RALT"
                 }
             }
         },
@@ -773,8 +773,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "RALT",
-                    "label": "RALT"
+                    "key": "FUNCTION1",
+                    "label": "\u01921"
                 }
             }
         },
@@ -786,8 +786,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION3",
-                    "label": "\u01923"
+                    "key": "FUNCTION2",
+                    "label": "\u01922"
                 }
             }
         },
@@ -799,8 +799,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUNCTION4",
-                    "label": "\u01924"
+                    "key": "RCTRL",
+                    "label": "RCTRL"
                 }
             }
         }
