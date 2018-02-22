@@ -64,6 +64,9 @@ case "$SCAN_MODULE" in
 "KType")    # K-Type
 	BuildScript="k-type.bash"
 	;;
+"Kira")     # Kira
+	BuildScript="kira.bash"
+	;;
 *)
 	echo "ERROR: Unknown keyboard type"
 	exit 1
