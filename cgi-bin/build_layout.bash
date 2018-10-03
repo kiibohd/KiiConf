@@ -87,17 +87,6 @@ while (( "$#" >= "1" )); do
 done
 
 case "$SCAN_MODULE" in
-"WhiteFox" | "MD1.1")
-	# Show commands
-	set -x
-
-	# Use this line if you want to enable debug logging.
-	#BaseMapOverride="scancode_map scancode_map.${VARIANT}" DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
-
-	BaseMapOverride="scancode_map scancode_map.${VARIANT}" DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
-
-	RETVAL=$?
-	;;
 "MDErgo1")
 	LBuildPath="${REAL_BUILD_PATH}/left"
 	RBuildPath="${REAL_BUILD_PATH}/right"
@@ -111,11 +100,11 @@ case "$SCAN_MODULE" in
 	# Show commands
 	set -x
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" PIPENV_ACTIVE=1 "${SOURCE_PATH}/Keyboards/ergodox-l.bash" -c "${SOURCE_PATH}" -o "${LBuildPath}"
 
 	RETVAL_L=$?
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" PIPENV_ACTIVE=1 "${SOURCE_PATH}/Keyboards/ergodox-r.bash" -c "${SOURCE_PATH}" -o "${RBuildPath}"
 
 	RETVAL_R=$?
 
@@ -142,9 +131,9 @@ case "$SCAN_MODULE" in
 	set -x
 
 	# Use this line if you want to enable debug logging.
-	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraBuildArgs="-- kll_debug" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
+	#DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" Layout="${VARIANT}" CMakeExtraBuildArgs="-- kll_debug" CMakeExtraArgs="-DCONFIGURATOR=1" PIPENV_ACTIVE=1 "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}" #"${DEFAULT_MAP}" "${PARTIAL_MAPS[@]}"
 
-	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" CMakeExtraArgs="-DCONFIGURATOR=1" "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
+	DefaultMapOverride="${DEFAULT_MAP}" PartialMapsExpandedOverride="${PARTIAL_MAPS}" Layout="${VARIANT}" CMakeExtraArgs="-DCONFIGURATOR=1" PIPENV_ACTIVE=1 "${SOURCE_PATH}/Keyboards/${BuildScript}" -c "${SOURCE_PATH}" -o "${REAL_BUILD_PATH}"
 
 	RETVAL=$?
 	;;
