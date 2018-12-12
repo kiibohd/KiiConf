@@ -2251,7 +2251,7 @@
       },
     "animations": {
         "orange_fade_in": {
-            "settings": "start, loops:1, pfunc:interp, replace:clear",
+            "settings": "loops:1, pfunc:interp, replace:clear",
             "frames": [
                 "P[1](0,0,0), P[128](0,0,0)",
                 "P[1](10,10,10), P[128](10,10,10)",
