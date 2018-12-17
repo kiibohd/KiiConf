@@ -2932,5 +2932,19 @@
                 "P[c:0%](${color}), P[c:100%](${color})"
             ]
         }
+    },
+    "macros": {
+        "0": [
+            {
+                "name": "Layer 1",
+                "trigger": [["RCtrl", "RShift"]],
+                "output": [["Layer[1]"]]
+            },
+            {
+                "name": "Layer 2",
+                "trigger": [["RCtrl", "RAlt"]],
+                "output": [["Layer[2]"]]
+            }
+        ]
     }
 }
