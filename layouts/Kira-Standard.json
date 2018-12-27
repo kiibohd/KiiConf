@@ -2251,6 +2251,7 @@
       },
     "animations": {
         "orange_fade_in": {
+            "type": "custom",
             "settings": "loops:1, pfunc:interp, replace:clear",
             "frames": [
                 "P[1](0,0,0), P[128](0,0,0)",
@@ -2310,6 +2311,7 @@
             ]
         },
         "test_animation": {
+            "type": "custom",
             "settings": "loop, replace:clear, pfunc:interp, framedelay:255",
             "frames": [
                 "P[1](255,255,255), P[128](255,255,255)",
@@ -2319,6 +2321,7 @@
             ]
         },
         "miami_wave": {
+            "type": "custom",
             "settings": "framedelay:3, framestretch, loop, replace:clear, pfunc:interp",
             "frames": [
                 "                      P[c:0%] (0,255,0),   P[c:25%](255,255,0), P[c:50%](255,255,255),   P[c:75%](127,0,255), P[c:100%](0,0,255)",
@@ -2389,6 +2392,7 @@
             ]
         },
         "rainbow_wave": {
+            "type": "custom",
             "settings": "framedelay:3, framestretch, loop, replace:clear, pfunc:interp",
             "frames": [
                 "                      P[c:0%] (0,255,0),   P[c:25%](255,255,0), P[c:50%](255,0,0),   P[c:75%](127,0,255), P[c:100%](0,0,255)",
@@ -2459,6 +2463,7 @@
             ]
         },
         "pastel_wave": {
+            "type": "custom",
             "settings": "framedelay:3, framestretch, loop, replace:clear, pfunc:interp",
             "frames": [
                 "                      P[c:0%] (40,255,40),   P[c:25%](255,255,40), P[c:50%](255,40,40),   P[c:75%](127,40,255), P[c:100%](40,40,255)",
@@ -2529,6 +2534,7 @@
             ]
         },
         "kira_wave": {
+            "type": "custom",
             "settings": "start, framedelay:3, framestretch, loop, replace:clear, pfunc:interp",
             "frames": [
                 "                      P[c:0%] (255,80,0),   P[c:33%](239,10,129), P[c:66%](129,10,239),   P[c:100%](10,60,255)",
@@ -2598,6 +2604,7 @@
             ]
         },
         "keys_only_rotation": {
+            "type": "custom",
             "settings": "pfunc:interp, replace:clear",
             "frames": [
                 "S1(0xC1, 0x2D, 0x1D), S99(0xC1, 0x2D, 0x1D)",
@@ -2623,6 +2630,7 @@
             ]
         },
         "underlighting_only_rotation": {
+            "type": "custom",
             "settings": "replace:clear",
             "frames": [
                 "P[18,21,24,27,30,115,118,120,122,113,33,108,49,106,65,104,82,85-86,88-90,92,95,98,100](0xC1, 0x2D, 0x1D)",
