@@ -2678,7 +2678,6 @@
                 }
             ],
             "frames": [
-                "### AUTO GENERATED - DO NOT EDIT ###",
                 "                      P[c:1%] (255,0,180),   P[c:25%](46,255,255), P[c:50%](255,0,180),   P[c:75%](204,255,0), P[c:100%](46,255,255)",
                 "P[c:-24%](46,255,255),   P[c:2%] (255,0,180),   P[c:27%](46,255,255), P[c:52%](255,0,180),   P[c:77%](204,255,0), P[c:102%](46,255,255)",
                 "P[c:-22%](46,255,255),   P[c:4%] (255,0,180),   P[c:29%](46,255,255), P[c:54%](255,0,180),   P[c:79%](204,255,0), P[c:104%](46,255,255)",
@@ -2789,7 +2788,6 @@
                 }
             ],
             "frames": [
-                "### AUTO GENERATED - DO NOT EDIT ###",
                 "                      P[c:1%] (${color_1}),   P[c:25%](${color_2}), P[c:50%](${color_3}),   P[c:75%](${color_4}), P[c:100%](${color_5})",
                 "P[c:-24%](${color_5}),   P[c:2%] (${color_1}),   P[c:27%](${color_2}), P[c:52%](${color_3}),   P[c:77%](${color_4}), P[c:102%](${color_5})",
                 "P[c:-22%](${color_5}),   P[c:4%] (${color_1}),   P[c:29%](${color_2}), P[c:54%](${color_3}),   P[c:79%](${color_4}), P[c:104%](${color_5})",
@@ -2859,7 +2857,7 @@
             "custom-kll": ""
         },
         "fingerprints": {
-            "settings": "framedelay:${speed}, framestretch, loops:1, replace:state",
+            "settings": "framedelay:${speed}, framestretch, loops:1, replace:stack",
             "type": "reaction",
             "description": "Leave your mark wherever you go",
             "configurable": [
@@ -2879,7 +2877,6 @@
                 }
             ],
             "frames": [
-                "### AUTO GENERATED - DO NOT EDIT ###",
                 "P[r:i,c:i](${color})",
                 "P[r:i,c:i](${color})",
                 "P[r:i,c:i](${color})",
@@ -2888,7 +2885,7 @@
             "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
         },
         "fingerprints_two_tone": {
-            "settings": "framedelay:${speed}, framestretch, loops:1, replace:state",
+            "settings": "framedelay:${speed}, framestretch, loops:1, replace:stack",
             "type": "reaction",
             "description": "Leave your mark wherever you go",
             "configurable": [
@@ -2913,7 +2910,6 @@
                 }
             ],
             "frames": [
-                "### AUTO GENERATED - DO NOT EDIT ###",
                 "P[r:i,c:i](${start_color})",
                 "P[r:i,c:i](${start_color})",
                 "P[r:i,c:i](${start_color})",
