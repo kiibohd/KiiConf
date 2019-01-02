@@ -2662,7 +2662,7 @@
     },
     "canned": {
         "miami_wave": {
-            "settings": "framedelay:${speed}, framestretch, loop, replace:all, pfunc:interp",
+            "settings": "framedelay:${speed}, framestretch, loop, replace:clear, pfunc:interp",
             "type": "animation",
             "description": "Lets the lights of Miami roll over you.",
             "configurable": [
@@ -2748,7 +2748,7 @@
             "custom-kll": ""
         },
         "custom_wave": {
-            "settings": "framedelay:${speed}, framestretch, loop, replace:all, pfunc:interp",
+            "settings": "framedelay:${speed}, framestretch, loop, replace:clear, pfunc:interp",
             "type": "animation",
             "description": "Create your own custom wave of colors",
             "configurable": [
@@ -2859,7 +2859,7 @@
             "custom-kll": ""
         },
         "fingerprints": {
-            "settings": "framedelay:${speed}, framestretch, loops:1, replace:basic",
+            "settings": "framedelay:${speed}, framestretch, loops:1, replace:state",
             "type": "reaction",
             "description": "Leave your mark wherever you go",
             "configurable": [
@@ -2888,7 +2888,7 @@
             "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
         },
         "fingerprints_two_tone": {
-            "settings": "framedelay:${speed}, framestretch, loops:1, replace:basic",
+            "settings": "framedelay:${speed}, framestretch, loops:1, replace:state",
             "type": "reaction",
             "description": "Leave your mark wherever you go",
             "configurable": [
@@ -2930,7 +2930,7 @@
             "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
         },
         "single_color": {
-            "settings": "start, replace:basic, pfunc:interp",
+            "settings": "replace:clear, pfunc:interp",
             "type": "animation",
             "description": "A nice classic single color back (and under) light.",
             "configurable": [
