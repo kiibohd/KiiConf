@@ -2882,7 +2882,7 @@
                 "P[r:i,c:i](${color})",
                 "P[r:i,c:i](${color})"
             ],
-            "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
+            "custom-kll": "S[0x00-0x63] :+ A[${__NAME__}](start);"
         },
         "fingerprints_two_tone": {
             "settings": "framedelay:${speed}, framestretch, loops:1, replace:stack",
@@ -2923,7 +2923,7 @@
                 "P[r:i,c:i](${start_color:end_color:0.95})",
                 "P[r:i,c:i](${end_color})"
             ],
-            "custom-kll": "S[0x00-0x5F] :+ A[${__NAME__}](start);"
+            "custom-kll": "S[0x00-0x63] :+ A[${__NAME__}](start);"
         },
         "single_color": {
             "settings": "replace:clear, pfunc:interp",
